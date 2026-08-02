@@ -1,0 +1,1945 @@
+<!DOCTYPE html>
+<html data-build-id="4794037c3f" data-git-hash="4794037c3febd641d4bc18890a97724d9e9ee3be" data-build-timestamp="1785415852" data-version="1.0.0" data-env="" data-color-version="v2" lang="en-US" data-theme="claude" data-mode="light" data-density="comfortable" class="cds-root h-screen antialiased scroll-smooth" style="--desktop-titlebar-inset: 0px; --toast-top-offset: 56px; --font-user-message: var(--font-sans-serif); --font-claude-response: var(--font-serif); --vt-image-preview-source-radius: 8px; --vt-image-preview-target-radius: 6px;">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>Cowork Staging mode — prototype</title>
+
+  <link rel="preconnect" href="https://assets-proxy.anthropic.com" crossorigin="">
+  <link rel="dns-prefetch" href="https://assets-proxy.anthropic.com">
+  <link rel="preload" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/cc27851ad-DDVos-BJ.woff2" as="font" type="font/woff2" crossorigin="">
+  <link rel="preload" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c66fc489e-2VcCjn5t.woff2" as="font" type="font/woff2" crossorigin="">
+  <link rel="preload" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c0f671921-_JGacpB2.woff2" as="font" type="font/woff2" crossorigin="">
+
+  <!-- Anthropic Claude Production Stylesheets -->
+  <link rel="stylesheet" crossorigin="" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/vendor-all-10-ab8c5DQB.css">
+  <link rel="stylesheet" crossorigin="" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/shared-frame-Dl97dde7.css">
+  <link rel="stylesheet" crossorigin="" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/shared-1-DQrj0z26.css">
+  <link rel="stylesheet" crossorigin="" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/shared-3-CL45MlPx.css">
+  <link rel="stylesheet" crossorigin="" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/shared-7-DCxNJvZj.css">
+  <link rel="stylesheet" crossorigin="" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/shared-9-1byzjcqY.css">
+  <link rel="stylesheet" crossorigin="" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/shared-12-gJXTt32m.css">
+  <link rel="stylesheet" crossorigin="" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/shared-13-DcvAU-AX.css">
+  <link rel="stylesheet" crossorigin="" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/shared-14-CPjv1KCp.css">
+  <link rel="stylesheet" crossorigin="" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/shared-15-BA78Fll-.css">
+  <link rel="stylesheet" crossorigin="" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/shared-17-BiiQSXml.css">
+  <link rel="stylesheet" crossorigin="" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/shared-18-Bb85X5QU.css">
+  <link rel="stylesheet" crossorigin="" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/shared-19-Nr1OlJep.css">
+  <link rel="stylesheet" crossorigin="" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/c6a992d55-dpf7G8XJ.css">
+  <link rel="stylesheet" crossorigin="" href="https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/cf1a02a1a-tPKvzhUL.css">
+
+  <style>
+    @font-face {
+      font-family: "Anthropic Sans Variable";
+      src: url("https://assets-proxy.anthropic.com/claude-ai/v2/assets/v1/cc27851ad-DDVos-BJ.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      --bg: hsl(var(--bg-100, 60 11.1% 94.7%));
+      --rail: hsl(var(--bg-200, 60 7.7% 92.4%));
+      --raised: #ffffff;
+      --sunken: hsl(var(--bg-200, 60 7.7% 92.4%));
+      --hover: hsl(var(--bg-300, 48 9% 88%));
+
+      --ink: hsl(var(--text-100, 30 5% 15%));
+      --ink-2: hsl(var(--text-300, 30 4% 40%));
+      --ink-3: hsl(var(--text-400, 30 4% 55%));
+      --ink-4: hsl(var(--text-500, 30 3% 68%));
+      --line: hsl(var(--border-200, 40 8% 86%));
+      --line-2: hsl(var(--border-300, 40 8% 80%));
+
+      --accent: #da7756;
+      --accent-hi: #cc6342;
+      --accent-soft: #fbf0eb;
+      --blue: #2f6fdd;
+
+      --t1: #4e6a72;  --t1-bg: #eef2f2;
+      --t2: #8f6529;  --t2-bg: #f9f1e3;
+      --t3: #ae4728;  --t3-bg: #f9e9e3;
+      --ok: #3d6b4a;  --ok-bg: #ecf2ec;
+
+      --ui: "Anthropic Sans Variable", var(--font-sans-serif, ui-sans-serif), -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      --serif: "Tiempos Text", "Copernicus", var(--font-serif, serif), Times New Roman, serif;
+      --wordmark: "Anthropic Sans Variable", "Copernicus", "Tiempos Headline", Times New Roman, serif;
+      --mono: ui-monospace, "SF Mono", SFMono-Regular, Menlo, Consolas, monospace;
+
+      --r-sm: 6px; --r-md: 10px; --r-lg: 14px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0; height: 100%; background: var(--bg); color: var(--ink);
+      font-family: var(--ui); font-size: 15px; line-height: 1.6; -webkit-font-smoothing: antialiased;
+    }
+    button, input, textarea, select { font: inherit; color: inherit; }
+    button { cursor: pointer; }
+    :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+    .app-root { display: flex; height: 100vh; width: 100vw; overflow: hidden; background: var(--bg); }
+
+    /* ================= sidebar ================= */
+    .rail {
+      width: 260px; flex: none; background: var(--rail); border-right: 1px solid var(--line);
+      display: flex; flex-direction: column; padding: 12px 10px 10px; gap: 12px; overflow-y: auto;
+    }
+    .rail-head { display: flex; align-items: center; gap: 6px; padding: 2px 6px 0; }
+    .wordmark {
+      font-family: var(--wordmark); font-size: 25px; font-weight: 520;
+      letter-spacing: -0.01em; line-height: 1.1; flex: 1; color: var(--ink);
+    }
+    .icon-btn {
+      width: 32px; height: 32px; border: 0; background: transparent; border-radius: var(--r-sm);
+      display: flex; align-items: center; justify-content: center; color: var(--ink-2); flex: none;
+      transition: background 0.15s ease;
+    }
+    .icon-btn:hover { background: var(--hover); color: var(--ink); }
+    .icon-btn svg { width: 18px; height: 18px; }
+
+    .seg { display: flex; gap: 3px; background: var(--hover); border-radius: 9px; padding: 3px; }
+    .seg button {
+      flex: 1; border: 0; background: transparent; border-radius: 7px; padding: 6px 8px;
+      font-size: 14px; font-weight: 500; color: var(--ink-2); display: flex; align-items: center; justify-content: center; gap: 6px;
+    }
+    .seg button svg { width: 15px; height: 15px; }
+    .seg button[aria-selected="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(0,0,0,.08); }
+
+    .nav { display: flex; flex-direction: column; gap: 2px; }
+    .nav-item {
+      display: flex; align-items: center; gap: 11px; width: 100%; text-align: left;
+      padding: 8px 10px; border: 0; background: transparent; border-radius: 8px;
+      font-size: 14.5px; color: var(--ink); transition: background 0.15s ease;
+    }
+    .nav-item:hover { background: var(--hover); }
+    .nav-item svg { width: 18px; height: 18px; flex: none; color: var(--ink-2); }
+
+    .recents-head {
+      display: flex; align-items: center; padding: 0 10px; margin-bottom: 4px;
+      font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink-3);
+    }
+    .recents-head .icon-btn { margin-left: auto; width: 24px; height: 24px; }
+    .recents-head .icon-btn svg { width: 14px; height: 14px; }
+
+    .task {
+      display: flex; align-items: flex-start; gap: 11px; width: 100%; text-align: left;
+      padding: 8px 10px; border: 0; background: transparent; border-radius: 8px;
+      font-size: 14px; color: var(--ink); transition: background 0.15s ease;
+    }
+    .task:hover { background: var(--hover); }
+    .task[aria-current="true"] { background: var(--hover); font-weight: 500; }
+    .task .tglyph { width: 16px; height: 16px; flex: none; color: var(--ink-3); margin-top: 3px; }
+    .task .tlabel { min-width: 0; flex: 1; }
+    .task small { display: block; font-size: 12px; color: var(--ink-3); line-height: 1.35; font-weight: 400; }
+
+    .getstarted {
+      border: 1px solid var(--line); background: #fff; border-radius: 12px; padding: 12px;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.03);
+    }
+    .gs-top { display: flex; align-items: center; font-size: 13.5px; font-weight: 500; margin-bottom: 8px; }
+    .gs-top span { margin-left: auto; color: var(--ink-3); font-weight: 400; font-size: 12.5px; }
+    .gs-bar { height: 4px; border-radius: 99px; background: var(--hover); overflow: hidden; margin-bottom: 11px; }
+    .gs-bar i { display: block; height: 100%; width: 50%; background: var(--blue); }
+    .gs-row { display: flex; gap: 9px; align-items: flex-start; font-size: 13.5px; }
+    .gs-row + .gs-row { margin-top: 9px; }
+    .gs-row svg { width: 16px; height: 16px; flex: none; margin-top: 2px; }
+    .gs-row.done span { color: var(--ink-3); text-decoration: line-through; }
+    .gs-row small { display: block; color: var(--ink-3); font-size: 12px; line-height: 1.4; margin-top: 1px; }
+
+    .rail-spacer { flex: 1; min-height: 6px; }
+    .design-row { display: flex; align-items: center; gap: 11px; padding: 8px 10px; font-size: 14.5px; font-weight: 500; color: var(--ink); }
+    .design-row svg { width: 18px; height: 18px; color: var(--ink-2); }
+    .labs {
+      font-size: 11px; color: var(--ink-3); border: 1px solid var(--line-2);
+      border-radius: 5px; padding: 1px 6px; display: inline-flex; align-items: center; gap: 4px; font-weight: 400;
+    }
+    .acct { display: flex; align-items: center; gap: 9px; padding: 8px 10px; border-radius: 8px; font-size: 14px; cursor: pointer; }
+    .acct:hover { background: var(--hover); }
+    .acct .pfp {
+      width: 28px; height: 28px; border-radius: 50%; flex: none; background: #3a3a38; color: #fff;
+      font-size: 11px; font-weight: 600; display: flex; align-items: center; justify-content: center; letter-spacing: .02em;
+    }
+    .acct .plan { color: var(--ink-3); }
+    .acct .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--blue); flex: none; }
+
+    /* ================= main ================= */
+    .main { flex: 1; display: flex; flex-direction: column; min-width: 0; position: relative; background: var(--bg); }
+    .topbar { height: 52px; flex: none; display: flex; align-items: center; gap: 8px; padding: 0 16px; border-bottom: 1px solid var(--line); }
+    .topbar .cloud { width: 18px; height: 18px; color: var(--ink-3); flex: none; }
+    .doc-title {
+      display: inline-flex; align-items: center; gap: 6px; border: 0; background: transparent;
+      font-size: 15px; font-weight: 500; padding: 4px 8px; border-radius: var(--r-sm); max-width: 46%; color: var(--ink);
+    }
+    .doc-title:hover { background: var(--hover); }
+    .doc-title span { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .doc-title svg { width: 14px; height: 14px; color: var(--ink-3); flex: none; }
+    .topbar-spacer { flex: 1; }
+    .chip {
+      font-size: 12px; font-weight: 500; color: var(--ink-2); border: 1px solid var(--line-2); background: #fff;
+      padding: 3px 10px; border-radius: 999px; white-space: nowrap;
+    }
+    .chip.live { color: var(--accent-hi); border-color: #eed6c9; background: var(--accent-soft); }
+
+    .scroll { flex: 1; overflow-y: auto; scroll-behavior: smooth; }
+    .thread { max-width: 720px; margin: 0 auto; padding: 24px 24px 36px; }
+
+    /* ================= turns ================= */
+    .turn { margin-bottom: 24px; }
+    .turn.user { display: flex; justify-content: flex-end; margin-bottom: 6px; }
+    .bubble { background: var(--sunken); border-radius: 16px; padding: 12px 18px; max-width: 82%; font-size: 15.5px; line-height: 1.55; color: var(--ink); }
+    .turn.stamp {
+      display: flex; justify-content: flex-end; align-items: center; gap: 7px;
+      font-size: 12px; color: var(--ink-4); margin-bottom: 24px;
+    }
+    .turn.stamp svg { color: var(--ink-4); }
+
+    .assistant-body > * + * { margin-top: 16px; }
+    .prose { font-family: var(--serif); font-size: 17.5px; line-height: 1.62; color: var(--ink); }
+    .prose.muted { color: var(--ink-2); }
+
+    .msg-actions { display: flex; gap: 4px; margin-top: 12px; }
+    .msg-actions button {
+      width: 28px; height: 28px; border: 0; background: transparent; border-radius: var(--r-sm);
+      display: flex; align-items: center; justify-content: center; color: var(--ink-3);
+    }
+    .msg-actions button:hover { background: var(--hover); color: var(--ink); }
+    .msg-actions svg { width: 16px; height: 16px; }
+
+    /* ================= progress ================= */
+    .status { display: flex; align-items: center; gap: 10px; font-size: 14.5px; color: var(--ink-2); }
+    .star { flex: none; animation: pulse 1.6s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: .45; transform: scale(.9);} 50% { opacity: 1; transform: scale(1);} }
+    .shimmer {
+      background: linear-gradient(90deg, var(--ink-3) 20%, var(--ink) 45%, var(--ink-3) 70%); background-size: 200% 100%;
+      -webkit-background-clip: text; background-clip: text; color: transparent; animation: sweep 2.1s linear infinite;
+    }
+    @keyframes sweep { from { background-position: 140% 0; } to { background-position: -40% 0; } }
+
+    .steps { display: flex; flex-direction: column; gap: 8px; }
+    .step { display: flex; align-items: flex-start; gap: 9px; font-size: 14px; color: var(--ink-2); animation: rise .22s ease both; }
+    .mk { width: 15px; height: 15px; min-width: 15px; flex: none; }
+    .step .mk, .step .star { margin-top: 3px; }
+    .step .sub { display: block; font-size: 12.5px; color: var(--ink-3); }
+    @keyframes rise { from { opacity: 0; transform: translateY(3px); } to { opacity: 1; transform: none; } }
+
+    /* ================= cards ================= */
+    .card { border: 1px solid var(--line); background: var(--raised); border-radius: 14px; overflow: hidden; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+    .card-head { display: flex; align-items: center; gap: 9px; padding: 11px 15px; border-bottom: 1px solid var(--line); background: var(--rail); flex-wrap: wrap; }
+    .card-head .glyph { width: 16px; height: 16px; color: var(--ink-2); flex: none; }
+    .card-title { font-size: 14px; font-weight: 600; color: var(--ink); }
+    .card-sub { font-size: 13px; color: var(--ink-3); }
+    .card-body { padding: 15px; }
+    .card-foot { display: flex; align-items: center; gap: 10px; padding: 11px 15px; border-top: 1px solid var(--line); background: var(--rail); flex-wrap: wrap; }
+    .foot-note { font-size: 12.5px; color: var(--ink-3); margin-left: auto; }
+
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px; padding: 7px 14px; border-radius: 8px;
+      font-size: 13.5px; font-weight: 500; border: 1px solid var(--line-2); background: #fff; color: var(--ink);
+      transition: background .15s ease, border-color .15s ease; cursor: pointer;
+    }
+    .btn:hover { background: var(--sunken); }
+    .btn.primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .btn.primary:hover { background: var(--accent-hi); border-color: var(--accent-hi); }
+    .btn.sm { padding: 5px 11px; font-size: 12.5px; }
+    .btn[disabled] { opacity: .45; pointer-events: none; }
+
+    .superseded { border: 1px dashed var(--line-2); background: transparent; border-radius: var(--r-md); overflow: hidden; }
+    .superseded > summary { display: flex; align-items: center; gap: 9px; list-style: none; cursor: pointer; padding: 9px 12px; font-size: 13px; color: var(--ink-3); }
+    .superseded > summary::-webkit-details-marker { display: none; }
+    .superseded > summary::marker { content: ""; }
+    .superseded > summary:hover { background: var(--sunken); }
+    .superseded .caret { margin-left: auto; transition: transform .18s ease; }
+    .superseded[open] .caret { transform: rotate(90deg); }
+    .superseded .inner { padding: 0 9px 9px; opacity: .72; }
+
+    .goal { font-family: var(--serif); font-size: 17px; line-height: 1.5; margin: 0 0 12px; color: var(--ink); }
+    .crit { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 8px; }
+    .crit li { display: flex; gap: 9px; align-items: flex-start; font-size: 14.5px; color: var(--ink-2); }
+    .crit .box { width: 16px; height: 16px; flex: none; margin-top: 3px; border: 1.5px solid var(--line-2); border-radius: 4px; background: #fff; }
+    .crit input[type="text"] { flex: 1; font-size: 14px; padding: 5px 9px; border: 1px solid var(--line-2); border-radius: var(--r-sm); background: #fff; }
+
+    .ledger { display: flex; flex-direction: column; }
+    .row { display: flex; align-items: center; gap: 10px; padding: 9px 14px; border-bottom: 1px solid var(--line); font-size: 13.5px; animation: rise .22s ease both; }
+    .row:last-child { border-bottom: 0; }
+    .row.warn { background: #fdf9f2; }
+    .row .call { font-family: var(--mono); font-size: 12.5px; font-weight: 500; }
+    .row .arg { font-family: var(--mono); font-size: 12.5px; color: var(--ink-3); }
+    .row .spread { flex: 1; }
+
+    .tier { font-size: 11px; font-weight: 600; letter-spacing: .03em; padding: 2px 8px; border-radius: 999px; white-space: nowrap; }
+    .tier.t1 { color: var(--t1); background: var(--t1-bg); }
+    .tier.t2 { color: var(--t2); background: var(--t2-bg); }
+    .tier.t3 { color: var(--t3); background: var(--t3-bg); }
+    .tier.ok { color: var(--ok); background: var(--ok-bg); }
+    .tier.no { color: var(--t3); background: var(--t3-bg); }
+
+    .paths { display: flex; flex-direction: column; gap: 8px; }
+    .path { display: flex; align-items: center; gap: 12px; border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px 14px; background: #fff; }
+    .path.win { border-color: var(--accent); background: var(--accent-soft); }
+    .path .name { font-size: 13.5px; font-weight: 600; width: 108px; flex: none; }
+    .path .why { font-size: 13.5px; color: var(--ink-2); flex: 1; }
+    .path .score { font-family: var(--mono); font-size: 13px; color: var(--ink-2); }
+    .path.win .score { color: var(--accent-hi); font-weight: 600; }
+
+    .group + .group { margin-top: 10px; }
+    .group-head {
+      display: flex; align-items: center; gap: 9px; list-style: none; cursor: pointer; width: 100%;
+      background: transparent; border: 1px solid var(--line); border-radius: var(--r-md); padding: 9px 13px; font-size: 14px; font-weight: 500;
+    }
+    .group-head::-webkit-details-marker { display: none; }
+    .group-head::marker { content: ""; }
+    .group-head:hover { background: var(--sunken); }
+    .group-head .count { color: var(--ink-3); font-size: 13px; font-weight: 400; }
+    .group-head .caret { margin-left: auto; color: var(--ink-3); transition: transform .18s ease; }
+    .group[open] .caret { transform: rotate(90deg); }
+    .group-items { padding: 8px 0 2px; display: flex; flex-direction: column; gap: 6px; }
+
+    .item { border: 1px solid var(--line); border-radius: var(--r-md); background: #fff; font-size: 13.5px; }
+    .item-main { display: flex; align-items: center; gap: 10px; padding: 9px 12px; }
+    .item .kind { width: 18px; height: 18px; flex: none; border-radius: 5px; display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 600; line-height: 1; }
+    .kind.add { background: var(--ok-bg); color: var(--ok); }
+    .kind.update { background: var(--t2-bg); color: var(--t2); }
+    .kind.remove { background: var(--t3-bg); color: var(--t3); }
+    .item .key { font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); flex: none; font-weight: 500; }
+    .item .change { flex: 1; min-width: 0; }
+    .item .change .detail { display: block; color: var(--ink-3); font-size: 12.5px; }
+    .old { color: var(--ink-3); text-decoration: line-through; text-decoration-color: #cbc8c0; }
+    .arrow { color: var(--ink-4); margin: 0 6px; }
+    .new { color: var(--ink); }
+    .item .rej { border: 0; background: transparent; color: var(--ink-3); padding: 3px; border-radius: 4px; display: flex; flex: none; }
+    .item .rej:hover { background: var(--t3-bg); color: var(--t3); }
+    .item .flag { font-size: 12px; color: var(--ink-3); white-space: nowrap; }
+
+    .item.pending { background: #fdf7f4; border-color: #eedcd3; }
+    .item.pending .new { text-decoration: line-through; text-decoration-color: #e2c8bc; color: var(--ink-3); }
+    .item.resolving, .item.regen { border-color: #e6d5b9; background: #fdfaf3; }
+    .item.blocked { background: var(--sunken); border-style: dashed; }
+    .item .reason { padding: 1px 12px 9px 40px; font-size: 12.5px; color: var(--t3); line-height: 1.5; }
+    .item .reason em { color: var(--ink-3); font-style: italic; }
+    .item .reason.regen-note { color: var(--t2); }
+    .item .reason .undo-rej { border: 0; background: transparent; color: var(--ink-3); text-decoration: underline; text-underline-offset: 3px; padding: 0; margin-left: 8px; font-size: 12.5px; }
+    .item .reason .undo-rej:hover { color: var(--ink); }
+
+    .rejform { padding: 0 12px 10px 40px; display: flex; flex-direction: column; gap: 8px; }
+    .rejform textarea { width: 100%; resize: vertical; min-height: 56px; font-size: 13.5px; padding: 8px 10px; border: 1px solid var(--line-2); border-radius: var(--r-sm); background: #fff; outline: none; }
+    .rejform textarea:focus { border-color: var(--accent); }
+    .rejform .rowbtns { display: flex; gap: 7px; align-items: center; flex-wrap: wrap; }
+    .rejform .hintline { font-size: 12px; color: var(--ink-3); margin-left: auto; }
+    .rejform .inputlabel { font-size: 13px; color: var(--ink-2); }
+    .rejform input[type="text"], .rejform select { width: 100%; font-size: 13.5px; padding: 8px 10px; border: 1px solid var(--line-2); border-radius: var(--r-sm); background: #fff; outline: none; }
+    .rejform input[type="text"]:focus, .rejform select:focus { border-color: var(--accent); }
+
+    .email { border: 1px solid var(--line); border-radius: var(--r-md); background: #fff; padding: 12px 14px; font-size: 14px; }
+    .email .subj { font-weight: 600; margin-bottom: 5px; color: var(--ink); }
+    .email .meta { font-size: 12.5px; color: var(--ink-3); margin-bottom: 10px; display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+    .email .body { color: var(--ink-2); white-space: pre-wrap; line-height: 1.6; font-size: 13.5px; }
+    .email mark { background: #f9f1e3; color: var(--ink); padding: 0 3px; border-radius: 3px; }
+
+    .note { display: flex; gap: 10px; align-items: flex-start; font-size: 13px; color: var(--ink-2); background: var(--sunken); border: 1px solid var(--line); border-radius: var(--r-md); padding: 10px 12px; }
+    .note.warn { background: #fdf9f2; border-color: #eedfc4; }
+    .note .glyph { width: 15px; height: 15px; flex: none; margin-top: 2px; color: var(--ink-3); }
+
+    .irrev { display: flex; align-items: center; gap: 12px; border: 1px solid #eedcd3; background: #fdf8f5; border-radius: var(--r-md); padding: 10px 12px; flex-wrap: wrap; }
+    .irrev-what { display: flex; align-items: flex-start; gap: 8px; font-size: 13.5px; color: var(--ink); flex: 1; min-width: 220px; }
+    .irrev-what svg { flex: none; margin-top: 3px; }
+
+    .file { display: flex; align-items: center; gap: 12px; border: 1px solid var(--line); background: #fff; border-radius: var(--r-md); padding: 11px 14px; }
+    .file .ficon { width: 32px; height: 32px; border-radius: 8px; background: var(--sunken); border: 1px solid var(--line); display: flex; align-items: center; justify-content: center; color: var(--ink-3); flex: none; }
+    .file .fname { font-size: 14px; font-weight: 500; color: var(--ink); }
+    .file .fmeta { font-size: 12px; color: var(--ink-3); display: block; }
+    .inline-btn { display: inline-flex; align-items: center; gap: 5px; background: var(--sunken); border: 1px solid var(--line-2); border-radius: var(--r-sm); padding: 4px 9px; font-size: 12.5px; color: var(--ink-2); cursor: pointer; }
+    .inline-btn:hover { background: #fff; color: var(--ink); }
+
+    .bubble .rej-head { font-size: 12.5px; color: var(--ink-3); margin-bottom: 6px; display: flex; align-items: center; gap: 6px; font-weight: 500; }
+    .bubble .rej-item { font-size: 14px; }
+    .bubble .rej-item + .rej-item { margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--line-2); }
+    .bubble .rej-item .what { font-family: var(--mono); font-size: 12.5px; color: var(--ink-2); font-weight: 500; }
+    .bubble .rej-item .why { display: block; color: var(--ink); margin-top: 2px; }
+    .bubble .rej-item .why.none { color: var(--ink-3); font-style: italic; }
+
+    /* ================= composer ================= */
+    .composer-wrap { flex: none; padding: 0 24px 16px; }
+    .composer {
+      max-width: 720px; margin: 0 auto; border: 1px solid var(--line-2); background: #fff;
+      border-radius: 18px; padding: 16px 16px 12px; box-shadow: 0 2px 8px rgba(0,0,0,.04);
+    }
+    .composer textarea {
+      width: 100%; border: 0; resize: none; background: transparent; outline: none;
+      font-family: var(--ui); font-size: 16.5px; line-height: 1.5; color: var(--ink); max-height: 120px;
+    }
+    .composer textarea::placeholder { color: var(--ink-4); font-family: var(--ui); }
+    .composer-row { display: flex; align-items: center; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
+    .icon-tool {
+      width: 32px; height: 32px; border-radius: 8px; border: 0; background: transparent;
+      display: flex; align-items: center; justify-content: center; color: var(--ink); flex: none;
+      transition: background 0.15s ease;
+    }
+    .icon-tool:hover { background: var(--sunken); }
+    .icon-tool svg { width: 18px; height: 18px; }
+
+    .sel {
+      display: inline-flex; align-items: center; gap: 6px; background: transparent; border: 0;
+      padding: 5px 9px; border-radius: var(--r-sm); font-size: 14px; font-weight: 500; color: var(--ink-2); cursor: pointer;
+    }
+    .sel:hover { background: var(--sunken); color: var(--ink); }
+    .sel svg { width: 16px; height: 16px; }
+    .mode-glyph { display: inline-flex; }
+    .mode-glyph svg { width: 16px; height: 16px; }
+    .sel .car { width: 13px; height: 13px; color: var(--ink-3); }
+    .sel.on { color: var(--accent-hi); }
+    .sel.on svg:first-child { color: var(--accent); }
+
+    .sel-wrap { position: relative; display: inline-flex; }
+    .sel .lo { color: var(--ink-3); }
+    .sel.warn .lo { color: var(--t2); font-weight: 500; }
+
+    .menu {
+      position: absolute; bottom: calc(100% + 9px); left: 0; width: 246px; z-index: 40;
+      background: #fff; border: 1px solid var(--line); border-radius: 14px;
+      box-shadow: 0 8px 30px rgba(26,26,25,.14); padding: 6px; display: none; overflow: visible;
+    }
+    .menu.open { display: block; }
+    .menu button {
+      position: relative; display: flex; gap: 10px; align-items: center; width: 100%; text-align: left;
+      border: 0; background: transparent; border-radius: 9px; padding: 9px 10px; font-size: 14.5px; color: var(--ink); cursor: pointer;
+    }
+    .menu button:hover { background: var(--sunken); }
+    .menu button.sel-row { background: var(--sunken); font-weight: 500; }
+    .menu .mglyph { width: 18px; height: 18px; flex: none; color: var(--ink); }
+    .menu .name { flex: 1; white-space: nowrap; }
+    .menu .tick { width: 16px; height: 16px; flex: none; color: var(--blue); }
+    .menu .rec {
+      font-size: 10.5px; color: var(--ok); background: var(--ok-bg); border-radius: 999px;
+      padding: 1px 6px; margin-left: 6px; vertical-align: 1px; font-weight: 600;
+    }
+
+    .tip {
+      position: absolute; left: calc(100% + 12px); top: 50%; transform: translateY(-50%);
+      width: max-content; max-width: 240px; background: #1c1b1a; color: #fff; border-radius: 9px;
+      padding: 9px 12px; font-size: 13px; line-height: 1.4; text-align: left;
+      pointer-events: none; opacity: 0; transition: opacity .12s ease; z-index: 5;
+    }
+    .menu button:hover .tip, .menu button:focus-visible .tip { opacity: 1; }
+    .sel[disabled] { opacity: .5; pointer-events: none; }
+
+    .composer.live { border-color: #e6cfa4; box-shadow: 0 0 0 3px #fdf6e8; }
+    .caution {
+      display: none; align-items: flex-start; gap: 8px; margin-top: 10px; padding-top: 9px;
+      border-top: 1px solid var(--line); font-size: 12.5px; color: var(--t2); line-height: 1.45;
+    }
+    .caution svg { width: 15px; height: 15px; flex: none; margin-top: 2px; }
+    .composer.live .caution { display: flex; }
+
+    .chip.off { color: var(--t2); border-color: #eedfc4; background: #fdf9f2; }
+    .model { margin-left: auto; display: inline-flex; align-items: center; gap: 6px; background: transparent; border: 0; padding: 5px 8px; border-radius: var(--r-sm); font-size: 14px; font-weight: 500; cursor: pointer; }
+    .model:hover { background: var(--sunken); }
+    .model .lo { color: var(--ink-3); font-weight: 400; }
+    .model .car { width: 13px; height: 13px; color: var(--ink-3); }
+    .send {
+      width: 32px; height: 32px; flex: none; border-radius: 9px; border: 0; background: var(--accent);
+      color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: background .15s ease;
+    }
+    .send:hover { background: var(--accent-hi); }
+    .send[disabled] { background: #e2ded7; pointer-events: none; }
+    .hint { font-size: 12.5px; color: var(--ink-4); text-align: center; margin-top: 10px; }
+
+    /* ================= right panel ================= */
+    .panel {
+      position: absolute; top: 10px; right: 12px; width: 250px; z-index: 15;
+      background: #fff; border: 1px solid var(--line); border-radius: 14px;
+      box-shadow: 0 6px 24px rgba(26,26,25,.08); padding: 4px; display: flex; flex-direction: column;
+    }
+    .panel[hidden] { display: none; }
+    .panel-sec > summary {
+      display: flex; align-items: center; gap: 8px; list-style: none; cursor: pointer;
+      padding: 11px 12px; font-size: 14.5px; font-weight: 500; border-radius: 9px;
+    }
+    .panel-sec > summary::-webkit-details-marker { display: none; }
+    .panel-sec > summary::marker { content: ""; }
+    .panel-sec > summary:hover { background: var(--sunken); }
+    .panel-sec .car { margin-left: auto; width: 14px; height: 14px; color: var(--ink-3); transition: transform .18s ease; }
+    .panel-sec[open] .car { transform: rotate(90deg); }
+    .panel-sec .badge { font-size: 12px; color: var(--ink-3); font-weight: 400; }
+    .panel-body { padding: 0 12px 12px; }
+    .panel-empty { font-size: 13px; color: var(--ink-3); line-height: 1.5; }
+    .panel-file { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--ink-2); padding: 4px 0; }
+    .panel-file svg { flex: none; color: var(--ink-3); }
+    .ctx-art { display: flex; justify-content: center; gap: 4px; padding: 6px 0 12px; }
+    .ctx-art i { display: block; width: 26px; height: 32px; border: 1.5px dashed var(--line-2); border-radius: 4px; }
+    .ctx-art i:nth-child(2) { transform: translateY(-3px); }
+    .ctx-art i:nth-child(3) { transform: rotate(7deg) translateY(-6px); }
+
+    /* ================= dialog ================= */
+    dialog { border: 1px solid var(--line-2); border-radius: 16px; padding: 0; max-width: 442px; width: calc(100% - 40px); background: #fff; color: var(--ink); box-shadow: 0 20px 50px rgba(26,26,25,.18); }
+    dialog::backdrop { background: rgba(26,26,25,.3); backdrop-filter: blur(2px); }
+    .dlg-body { padding: 20px 20px 8px; }
+    .dlg-body h2 { font-family: var(--serif); font-size: 19px; font-weight: 400; margin: 0 0 10px; color: var(--ink); }
+    .dlg-tool { display: flex; align-items: center; gap: 8px; font-family: var(--mono); font-size: 12.5px; background: var(--sunken); border: 1px solid var(--line); border-radius: var(--r-sm); padding: 8px 11px; margin-bottom: 12px; color: var(--ink-2); }
+    .dlg-body p { font-size: 14.5px; color: var(--ink-2); margin: 0 0 12px; line-height: 1.5; }
+    .dlg-note { font-size: 13px; color: var(--t3); background: var(--t3-bg); border-radius: var(--r-sm); padding: 9px 11px; }
+    .dlg-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 14px 20px 18px; }
+
+    .pop { position: absolute; top: 48px; right: 14px; z-index: 30; width: 280px; background: #fff; border: 1px solid var(--line-2); border-radius: 14px; box-shadow: 0 12px 30px rgba(26,26,25,.14); padding: 14px; display: none; }
+    .pop.open { display: block; }
+    .pop h3 { font-size: 11px; letter-spacing: .07em; text-transform: uppercase; color: var(--ink-4); margin: 0 0 10px; font-weight: 600; }
+    .toggle { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; font-size: 14px; color: var(--ink); }
+    .toggle input { margin-top: 3px; accent-color: var(--accent); }
+    .toggle small { display: block; color: var(--ink-3); font-size: 12px; line-height: 1.45; margin-top: 2px; }
+
+    @media (max-width: 900px) { .panel { display: none; } }
+    @media (max-width: 780px) {
+      .rail { display: none; }
+      .thread { padding: 16px 16px 28px; }
+      .composer-wrap { padding: 0 16px 12px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation-duration: .001s !important; transition-duration: .001s !important; }
+      .scroll { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+
+<body class="bg-bg-100 text-text-100 font-ui min-h-screen chat-ui-core" style="pointer-events: auto;">
+<div id="root">
+  <div class="cds-root text-primary contents" data-density="comfortable" data-mode="light" data-platform="web" data-font="anthropic" style="font-size: var(--cds-font-size-body);">
+    <div class="root">
+      <div class="app-root">
+        
+        <!-- ================= sidebar ================= -->
+        <aside class="rail" aria-label="Sidebar">
+          <div class="rail-head">
+            <div class="wordmark">Claude</div>
+            <button class="icon-btn" aria-label="Toggle sidebar"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M10 4v16"/></svg></button>
+            <button class="icon-btn" aria-label="Search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg></button>
+          </div>
+
+          <div class="seg" role="tablist">
+            <button role="tab" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 10.5 12 3l9 7.5"/><path d="M5 9.5V21h14V9.5"/></svg>Home</button>
+            <button role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="m8 6-5 6 5 6M16 6l5 6-5 6"/></svg>Code</button>
+          </div>
+
+          <div class="nav">
+            <button class="nav-item" onclick="loadScenario(CURRENT)"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v8M8 12h8"/></svg>New</button>
+            <button class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M8 14H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/><path d="M10 8h9a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2h-2l-3 3v-3h-4a2 2 0 0 1-2-2z"/></svg>Chats and tasks</button>
+            <button class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>Projects</button>
+            <button class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="7" cy="15" r="3.5"/><circle cx="17" cy="15" r="3.5"/><path d="M7 11.5V8a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v3.5"/></svg>Artifacts</button>
+            <button class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Scheduled</button>
+            <button class="nav-item"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="12" rx="2"/><path d="M9 7V5h6v2"/><path d="M2 12h20"/></svg>Customize</button>
+          </div>
+
+          <div>
+            <div class="recents-head">Recents
+              <button class="icon-btn" aria-label="Sort"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M5 7h14M8 12h8M10 17h4"/></svg></button>
+            </div>
+            <div id="taskList"></div>
+          </div>
+
+          <div class="getstarted">
+            <div class="gs-top">Get started with Claude <span>1/2</span></div>
+            <div class="gs-bar"><i></i></div>
+            <div class="gs-row done">
+              <svg viewBox="0 0 24 24" fill="var(--blue)"><circle cx="12" cy="12" r="10"/><path d="m8 12 3 3 5-6" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+              <span>Customize Claude for you</span>
+            </div>
+            <div class="gs-row">
+              <svg viewBox="0 0 24 24" fill="none" stroke="var(--line-2)" stroke-width="1.6"><circle cx="12" cy="12" r="10"/></svg>
+              <span>Get a morning brief<small>A morning rundown of what's on your plate and what changed overnight</small></span>
+            </div>
+          </div>
+
+          <div class="rail-spacer"></div>
+
+          <div class="design-row">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 0 18c1 0 1.5-.7 1.5-1.5 0-1.4 1-2 2-2H18a3 3 0 0 0 3-3c0-5-4-8.5-9-8.5z"/><circle cx="8" cy="11" r="1"/><circle cx="12" cy="8" r="1"/><circle cx="16" cy="11" r="1"/></svg>
+            Design <span class="labs">Labs</span>
+          </div>
+          <div class="acct">
+            <span class="pfp">NG</span>
+            <span>Nancy Gao <span class="plan">· Pro</span></span>
+            <span style="flex:1"></span>
+            <span class="dot"></span>
+          </div>
+        </aside>
+
+        <!-- ================= main ================= -->
+        <main class="main">
+          <header class="topbar">
+            <svg class="cloud" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 19a4.5 4.5 0 0 1-.4-9A6 6 0 0 1 17.7 9.2 3.9 3.9 0 0 1 17.5 19z"/></svg>
+            <button class="doc-title"><span id="topTitle"></span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+            <span class="chip live" id="modeChip">Staging · nothing applied yet</span>
+            <div class="topbar-spacer"></div>
+            <button class="icon-btn" id="popBtn" onclick="togglePop(event)" aria-label="Prototype toggles"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M4 6h8M18 6h2M4 12h2M10 12h10M4 18h10M20 18h0"/><circle cx="15" cy="6" r="2"/><circle cx="7" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg></button>
+            <button class="icon-btn" onclick="loadScenario(CURRENT)" aria-label="Restart"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></button>
+            <button class="icon-btn" onclick="document.getElementById('panel').hidden = !document.getElementById('panel').hidden" aria-label="Toggle panel"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="2"/><path d="M15 4v16"/></svg></button>
+
+            <div class="pop" id="pop">
+              <h3>Roadmap toggles</h3>
+              <label class="toggle"><input type="checkbox" id="tglParallel" /><span>Parallel pathfinding <small>P1 — three sub-agent workstreams scored against the done contract. Only the winner is surfaced.</small></span></label>
+            </div>
+          </header>
+
+          <aside class="panel" id="panel">
+            <details class="panel-sec">
+              <summary>Progress <svg class="car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></summary>
+              <div class="panel-body" id="progList"></div>
+            </details>
+            <details class="panel-sec">
+              <summary>Outputs <span class="badge" id="outCount"></span><svg class="car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></summary>
+              <div class="panel-body" id="outList"></div>
+            </details>
+            <details class="panel-sec" open>
+              <summary>Context <svg class="car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg></summary>
+              <div class="panel-body">
+                <div class="ctx-art"><i></i><i></i><i></i></div>
+                <div class="panel-empty">Track tools and referenced files used in this task.</div>
+              </div>
+            </details>
+          </aside>
+
+          <div class="scroll" id="scroll">
+            <div class="thread" id="thread"></div>
+          </div>
+
+          <div class="composer-wrap">
+            <div class="composer">
+              <textarea id="input" rows="2" placeholder="Write a message…"></textarea>
+              <div class="composer-row">
+                <button class="icon-tool" aria-label="Attach file"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg></button>
+                <button class="icon-tool" aria-label="Upload folder"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7a2 2 0 0 1 2-2h3.5l2 2H19a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M12 11v5M9.5 13.5h5"/></svg></button>
+                <span class="sel-wrap">
+                  <button class="sel" id="modeBtn" onclick="toggleModeMenu(event)" aria-haspopup="menu" aria-expanded="false">
+                    <span class="mode-glyph" id="modeGlyph"></span>
+                    <span id="modeLabel">Staging</span>
+                    <svg class="car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg>
+                  </button>
+                  <div class="menu" id="modeMenu" role="menu">
+                    <button role="menuitem" id="row-manual" onclick="setMode('manual')">
+                      <svg class="mglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6.5a1.5 1.5 0 0 0-3 0V11"/><path d="M15 10.5V4.5a1.5 1.5 0 0 0-3 0V11"/><path d="M12 10.5V5.5a1.5 1.5 0 0 0-3 0V13"/><path d="M9 12V8.5a1.5 1.5 0 0 0-3 0V14a7 7 0 0 0 7 7h1a5 5 0 0 0 5-5v-5"/></svg>
+                      <span class="name">Manually approve</span>
+                      <svg class="tick" id="tick-manual" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="visibility:hidden"><path d="M20 6 9 17l-5-5"/></svg>
+                      <span class="tip">Claude pauses so you can approve each action.</span>
+                    </button>
+
+                    <button role="menuitem" id="row-staging" onclick="setMode('staging')">
+                      <svg class="mglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16.6 3.4a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"/><path d="M4 21.4h8"/></svg>
+                      <span class="name">Stage changes <span class="rec">New</span></span>
+                      <svg class="tick" id="tick-staging" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+                      <span class="tip">Claude pauses once so you can review every change together.</span>
+                    </button>
+
+                    <button role="menuitem" id="row-auto" onclick="setMode('auto')">
+                      <svg class="mglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5l8 7-8 7z"/><path d="M13 5l8 7-8 7z"/></svg>
+                      <span class="name">Automatically approve</span>
+                      <svg class="tick" id="tick-auto" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="visibility:hidden"><path d="M20 6 9 17l-5-5"/></svg>
+                      <span class="tip">Claude runs on its own and pauses to ask if anything looks unsafe.</span>
+                    </button>
+
+                    <button role="menuitem" id="row-skip" onclick="setMode('skip')">
+                      <svg class="mglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 16h0"/><path d="M10.3 3.9 1.8 18a2 2 0 0 1 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+                      <span class="name">Skip all approvals</span>
+                      <svg class="tick" id="tick-skip" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" style="visibility:hidden"><path d="M20 6 9 17l-5-5"/></svg>
+                      <span class="tip">Claude never pauses, even for unsafe actions.</span>
+                    </button>
+                  </div>
+                </span>
+
+                <button class="model"><span>Opus 5</span> <span class="lo">High</span><svg class="car" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6 9l6 6 6-6"/></svg></button>
+                <button class="icon-tool" aria-label="Dictate"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="2" width="6" height="11" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/></svg></button>
+                <button class="send" id="sendBtn" onclick="startTask()" aria-label="Send"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+              </div>
+              <div class="caution">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h0"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+                <span>This mode doesn't stage — Claude writes to Jira, Drive and Gmail as it works. There's nothing to review before it lands.</span>
+              </div>
+            </div>
+            <div class="hint" id="hint"></div>
+          </div>
+        </main>
+      </div>
+    </div>
+  </div>
+</div>
+
+<dialog id="dlg">
+  <div class="dlg-body">
+    <h2 id="dlgTitle"></h2>
+    <div class="dlg-tool" id="dlgTool"></div>
+    <p id="dlgText"></p>
+    <div class="dlg-note" id="dlgNote"></div>
+  </div>
+  <div class="dlg-foot">
+    <button class="btn" id="dlgNo">Deny</button>
+    <button class="btn primary" id="dlgOk"></button>
+</dialog>
+
+<script>
+/* ============================================================
+   Cowork Staging mode — scripted prototype
+   plan → sandbox run → staged changes → reject w/ reason →
+   cascading regeneration → new revision → apply
+   ============================================================ */
+
+const REDUCED = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const wait = ms => new Promise(r => setTimeout(r, REDUCED ? 10 : ms));
+
+const $thread = document.getElementById("thread");
+const $scroll = document.getElementById("scroll");
+const $input  = document.getElementById("input");
+const $send   = document.getElementById("sendBtn");
+
+/* ============================================================
+   SCENARIOS
+   Each action: { id, group, kind, key, label, detail, from, to,
+                  tier, deps[], blocked?, render?, regen(live) }
+   regen() returns the fields to overwrite after an upstream reject.
+   ============================================================ */
+
+const OWNERS = ["Priya Nair","Marcus Webb","Dana Ortiz","Sam Iyer","Lena Fischer","Tomás Rivera","Aisha Khan","Ben Cho"];
+const PRIOR  = ["Unassigned","Ray Sandoval","Unassigned","Marcus Webb","Ray Sandoval","Dana Ortiz","Unassigned","Ray Sandoval"];
+
+function jiraAssignees() {
+  const out = [];
+  for (let i = 0; i < 20; i++) {
+    out.push({
+      id: "a" + i, group: "Assignee updates", kind: "update",
+      key: "CW-" + (207 + i * 3), from: PRIOR[i % 8], to: OWNERS[i % 8],
+      tier: 2, deps: []
+    });
+  }
+  out[7] = { id: "a7", group: "Assignee updates", kind: "update", key: "CW-231",
+             from: "Ray Sandoval", to: "Aisha Khan", tier: 2, deps: [] };
+  return out;
+}
+
+function liveTickets(S) {
+  return ["t268","t269","t270"].filter(id => !S.byId[id].rejected).map(id => S.byId[id]);
+}
+
+/* invoice deltas so the payroll total is derived, not hardcoded */
+const INV_DELTA = { i1:-540, i2:180, i3:100, i5:-36 };
+const INV_RESOLVED_ADD = { b1:3180, b2:0 };
+const money = n => "$" + n.toLocaleString("en-US", { minimumFractionDigits:2, maximumFractionDigits:2 });
+
+function payrollTotal(S) {
+  let amt = 485744;
+  Object.entries(INV_DELTA).forEach(([k,v]) => { if (S.byId[k] && S.byId[k].rejected) amt -= v; });
+  Object.entries(INV_RESOLVED_ADD).forEach(([k,v]) => { if (S.byId[k] && S.byId[k].resolved) amt += v; });
+  return amt;
+}
+
+const SCENARIOS = {
+
+  /* ---------- 1. cascading regeneration across 3 dependents ---------- */
+  jira: {
+    id: "jira",
+    title: "Reconcile Jira backlog to roadmap",
+    blurb: "Cascading regeneration",
+    prompt: "Reconcile the Jira backlog against the H2 Roadmap doc, create tickets for new features, update assignees on 20 tasks, and draft the launch email.",
+    goal: "Map the H2 roadmap to Jira, sync 20 task assignees, and stage the launch email.",
+    criteria: [
+      "Every roadmap item maps to an open Jira issue or a new ticket",
+      "No duplicate tickets created against existing CW issues",
+      "20 assignee updates applied, all assignees are active CW project members",
+      "Launch email lists the final owner for each H2 workstream",
+      "Nothing sent externally without approval"
+    ],
+    tip: "Reject a new ticket to see three downstream actions regenerate.",
+    ledger: [
+      { tier:1, call:"drive.search",         arg:"'H2 2026 Roadmap'",           note:"proxied to Workspace" },
+      { tier:1, call:"docs.get",             arg:"roadmap · 34 sections",       note:"proxied to Workspace" },
+      { tier:1, call:"jira.searchIssues",    arg:"project=CW AND status!=Done", note:"62 issues" },
+      { tier:1, call:"jira.getProjectRoles", arg:"project=CW",                  note:"8 members" },
+      { tier:2, call:"jira.createIssue",     arg:"×3 from roadmap gaps",        note:"staged" },
+      { tier:2, call:"jira.updateIssue",     arg:"×20 assignee",                note:"staged" },
+      { tier:2, call:"jira.transitionIssue", arg:"CW-244 → Closed (duplicate)", note:"staged" },
+      { tier:2, call:"docs.appendComment",   arg:"roadmap § ledger and replay", note:"staged" },
+      { tier:2, call:"gmail.createDraft",    arg:"'H2 launch — owners locked'", note:"staged" },
+      { tier:3, call:"gmail.send",           arg:"to eng-leads@ (7)",           note:"needs approval" }
+    ],
+    workstreams: [
+      { name:"Workstream 1", why:"Grouped by epic; roadmap gap 'ledger replay' left untracked", score:"0.72" },
+      { name:"Workstream 2", why:"All 5 checks pass; 3 gaps ticketed, owners resolved from Jira project roles", score:"0.94", win:true },
+      { name:"Workstream 3", why:"Ticketed 6 gaps, 3 of them duplicate existing CW issues", score:"0.61" }
+    ],
+    actions: [
+      { id:"t268", group:"New tickets", kind:"add", key:"CW-268", tier:2, deps:[],
+        label:"Sandbox proxy for Workspace writes", detail:"Assignee Marcus Webb · Epic: Sandbox" },
+      { id:"t269", group:"New tickets", kind:"add", key:"CW-269", tier:2, deps:[],
+        label:"Action ledger snapshot and replay API", detail:"Assignee Priya Nair · Epic: Sandbox" },
+      { id:"t270", group:"New tickets", kind:"add", key:"CW-270", tier:2, deps:[],
+        label:"Staged changes surface in the task thread", detail:"Assignee Dana Ortiz · Epic: Sandbox" },
+
+      { id:"rm244", group:"Duplicate cleanup", kind:"remove", key:"CW-244", tier:2, deps:["t268"],
+        label:"Close 'Proxy layer spike' as duplicate of CW-268", detail:"Resolution: Duplicate",
+        regen: () => ({ dropped:true, note:"CW-268 was rejected, so CW-244 is no longer a duplicate of anything. Dropped." }) },
+
+      ...jiraAssignees(),
+
+      { id:"sprint", group:"Sprint scope", kind:"update", key:"Sprint 24", tier:2, deps:["t268","t269","t270"],
+        from:"11 issues", to:"14 issues", detail:"Adds CW-268, CW-269, CW-270",
+        regen: (S) => {
+          const t = liveTickets(S);
+          return { to: (11 + t.length) + " issues", detail: t.length ? "Adds " + t.map(x=>x.key).join(", ") : "No new tickets to add" };
+        } },
+
+      { id:"doclink", group:"Roadmap doc", kind:"update", key:"§ Ledger", tier:2, deps:["t269"],
+        from:"no linked issue", to:"linked to CW-269", detail:"Comment added to H2 Roadmap doc",
+        regen: () => ({ to:"flagged as untracked", detail:"No Jira issue covers this roadmap item — comment rewritten to flag the gap" }) },
+
+      { id:"mail", group:"Launch email", kind:"add", key:"Draft", tier:3, deps:["t268","t269","t270","a7"],
+        label:"H2 launch — scope and owners locked", detail:"To eng-leads@ (7 recipients)", email:true,
+        sent: () => `Launch email "H2 launch — scope and owners locked" sent to eng-leads@ (7 recipients)`,
+        remedy: "Draft a correction email to those 7 recipients",
+        correction: (S) => {
+          const a7 = S.byId["a7"];
+          const owner = a7.rejected ? a7.from : a7.to;
+          return {
+            title: "Correction — H2 launch owners",
+            meta: "To: eng-leads@ (7 recipients) · Tier 3, needs approval",
+            body: `Team,
+
+A correction to this morning's launch email: search relevance is owned by ${owner}, not the name listed in the original note. Everything else in that email stands.
+
+Apologies for the churn.`
+          };
+        } }
+    ],
+  },
+
+  /* ---------- 2. mid-batch failure caught in the sandbox ---------- */
+  invoices: {
+    id: "invoices",
+    title: "Q3 vendor invoice reconciliation",
+    blurb: "Mid-batch failure",
+    prompt: "Reconcile the Q3 vendor invoices against the ledger, correct the amounts, and post the payroll journal entry.",
+    goal: "Reconcile 20 Q3 invoices, correct variances, and stage the payroll journal entry.",
+    criteria: [
+      "Every invoice matches a PO number in the ledger",
+      "Corrected amounts reconcile to the vendor statement total",
+      "No journal entry is posted while any invoice is unreconciled",
+      "Nothing posts to NetSuite without approval"
+    ],
+    tip: "Invoice 7 fails during staging. Resolve the two blocked rows to regenerate.",
+    resolvedGroup: "Corrected invoices",
+    ledger: [
+      { tier:1, call:"sheets.getRange",  arg:"Q3 vendor statement · 20 rows", note:"proxied" },
+      { tier:1, call:"netsuite.listBills", arg:"period=Q3",                   note:"20 bills" },
+      { tier:2, call:"sheets.updateRow", arg:"rows 1–6",                      note:"staged" },
+      { tier:2, call:"sheets.updateRow", arg:"row 7 · INV-1047",              note:"schema mismatch — halted", warn:true },
+      { tier:1, call:"ledger.rollback",  arg:"batch rows 1–7",                note:"staging state rolled back", warn:true },
+      { tier:2, call:"sheets.updateRow", arg:"rows 8–20 · retried",           note:"staged" },
+      { tier:2, call:"sheets.setCell",   arg:"payroll total",                 note:"staged" },
+      { tier:3, call:"netsuite.postJournalEntry", arg:"JE-Q3-payroll",        note:"needs approval" }
+    ],
+    workstreams: [
+      { name:"Workstream 1", why:"Halted at invoice 7 and stopped; 13 invoices left unreconciled", score:"0.44" },
+      { name:"Workstream 2", why:"Rolled back the batch, isolated 2 bad rows, reconciled the other 18", score:"0.91", win:true },
+      { name:"Workstream 3", why:"Inferred the missing PO numbers instead of flagging them", score:"0.38" }
+    ],
+    actions: [
+      { id:"i1", group:"Corrected invoices", kind:"update", key:"INV-1041", tier:2, deps:[], from:"$4,820.00", to:"$4,280.00", detail:"Transposition against PO-3391" },
+      { id:"i2", group:"Corrected invoices", kind:"update", key:"INV-1043", tier:2, deps:[], from:"$12,400.00", to:"$12,400.00 + $180.00 freight", detail:"Freight line missing from the bill" },
+      { id:"i3", group:"Corrected invoices", kind:"update", key:"INV-1044", tier:2, deps:[], from:"$960.00", to:"$1,060.00", detail:"Rounding variance against PO-3402" },
+      { id:"i4", group:"Corrected invoices", kind:"update", key:"INV-1049", tier:2, deps:[], from:"$7,315.00", to:"$7,315.00", detail:"Matched, no change — kept for the audit trail" },
+      { id:"i5", group:"Corrected invoices", kind:"update", key:"INV-1055", tier:2, deps:[], from:"$2,240.00", to:"$2,204.00", detail:"Duplicate line removed" },
+
+      { id:"b1", group:"Blocked", kind:"update", key:"INV-1047", tier:2, deps:[], blocked:true,
+        label:"No PO number on the bill", detail:"Staging stopped here. Needs your input before it can be included.",
+        inputLabel:"Which PO does INV-1047 belong to?", placeholder:"e.g. PO-3417",
+        resolve: (v) => ({ from:"$3,180.00 · unmatched", to:"$3,180.00 · " + v,
+                           label:undefined, detail:"Matched to " + v + " from your input" }) },
+
+      { id:"b2", group:"Blocked", kind:"update", key:"INV-1052", tier:2, deps:[], blocked:true,
+        label:"Vendor name matches two ledger accounts", detail:"Needs your input before it can be included.",
+        inputLabel:"Which ledger account should Northline Supply post to?",
+        options:["6100 · Payroll — Contract", "6140 · Payroll — Temp staffing"],
+        resolve: (v) => ({ from:"unmatched vendor", to:v, label:undefined,
+                           detail:"Ledger account chosen by you" }) },
+
+      { id:"total", group:"Payroll total", kind:"update", key:"B47", tier:2, deps:["i1","i2","i3","i5","b1","b2"],
+        from:"$486,220.00", to:"$485,744.00", detail:"Recomputed from the corrected invoice rows",
+        regen: (S) => {
+          const res = ["b1","b2"].filter(id => S.byId[id].resolved).length;
+          const rej = ["i1","i2","i3","i5"].filter(id => S.byId[id].rejected).length;
+          const bits = [];
+          if (rej) bits.push(`without ${rej} rejected correction${rej===1?"":"s"}`);
+          if (res) bits.push(`including ${res} newly resolved invoice${res===1?"":"s"}`);
+          return { to: money(payrollTotal(S)), detail: "Recomputed " + (bits.join(" and ") || "from the corrected rows") };
+        } },
+
+      { id:"je", group:"Journal entry", kind:"add", key:"JE-Q3", tier:3, deps:["total"],
+        label:"Post Q3 payroll journal entry to NetSuite", detail:"Debit 6100 Payroll · Credit 2100 Accrued · $485,744.00",
+        sent: (S) => `Journal entry JE-Q3-payroll posted to NetSuite for ${money(payrollTotal(S))} (Debit 6100 Payroll / Credit 2100 Accrued)`,
+        remedy: "Prepare a reversing journal entry",
+        correction: (S) => ({
+          title: "Reversing entry JE-Q3-payroll-R",
+          meta: "NetSuite · period Q3 · Tier 3, needs approval",
+          body: `Reverses JE-Q3-payroll in full.\n\nDebit  2100 Accrued payroll   ${money(payrollTotal(S))}\nCredit 6100 Payroll expense   ${money(payrollTotal(S))}\n\nMemo: reverses JE-Q3-payroll posted in error. Original entry left in place for the audit trail rather than deleted.`
+        }),
+        regen: (S) => ({ detail:"Debit 6100 Payroll · Credit 2100 Accrued · " + money(payrollTotal(S)) }) }
+    ],
+  },
+
+  /* ---------- 3. irreversible removes, applying is final ---------- */
+  docs: {
+    id: "docs",
+    title: "Onboarding docs cleanup",
+    blurb: "Irreversible deletes",
+    prompt: "Clean up the onboarding folder: delete the docs superseded by the 2026 handbook and fix the links that point at them.",
+    goal: "Retire 4 superseded onboarding docs and repoint every link at the 2026 handbook.",
+    criteria: [
+      "Only docs explicitly superseded by the 2026 handbook are deleted",
+      "No link anywhere in the folder still points at a deleted doc",
+      "Nothing is deleted without explicit approval"
+    ],
+    tip: "Deletes are Tier 3 — Claude can stage them for review, but applying them is final.",
+    ledger: [
+      { tier:1, call:"drive.listFiles",   arg:"folder: Onboarding · 31 files", note:"proxied" },
+      { tier:1, call:"docs.get",          arg:"2026 Handbook · 12 sections",   note:"proxied" },
+      { tier:1, call:"drive.searchLinks", arg:"references to 4 candidates",    note:"6 inbound links" },
+      { tier:2, call:"docs.updateContent",arg:"index page · 6 links",          note:"staged" },
+      { tier:2, call:"docs.appendSection",arg:"index page · redirect note",    note:"staged" },
+      { tier:3, call:"drive.deleteFile",  arg:"×4 superseded docs",            note:"needs approval" }
+    ],
+    workstreams: [
+      { name:"Workstream 1", why:"Deleted first, fixed links after — 6 links briefly broken", score:"0.55" },
+      { name:"Workstream 2", why:"Repoints every inbound link before any delete is proposed", score:"0.93", win:true },
+      { name:"Workstream 3", why:"Archived instead of deleting; leaves the folder ambiguous", score:"0.68" }
+    ],
+    actions: [
+      { id:"d1", group:"Deletions", kind:"remove", key:"Doc", tier:3, deps:[], label:"Onboarding checklist (2023).docx", detail:"Superseded by handbook § 2 · last opened 14 months ago",
+        sent: () => `"Onboarding checklist (2023).docx" permanently deleted from the Onboarding folder in Drive`,
+        remedy: "Restore \"Onboarding checklist (2023).docx\" from Drive trash",
+        correction: () => ({ title:"Restore \"Onboarding checklist (2023).docx\"", meta:"Google Drive · trash retains deleted files for 30 days · Tier 2",
+          body:`Moves "Onboarding checklist (2023).docx" back into the Onboarding folder from Drive trash.\n\nThe index page link that was repointed at the 2026 handbook will be pointed back at this file.` }) },
+      { id:"d2", group:"Deletions", kind:"remove", key:"Doc", tier:3, deps:[], label:"Benefits overview v4.docx", detail:"Superseded by handbook § 7 · last opened 9 months ago",
+        sent: () => `"Benefits overview v4.docx" permanently deleted from the Onboarding folder in Drive`,
+        remedy: "Restore \"Benefits overview v4.docx\" from Drive trash",
+        correction: () => ({ title:"Restore \"Benefits overview v4.docx\"", meta:"Google Drive · trash retains deleted files for 30 days · Tier 2",
+          body:`Moves "Benefits overview v4.docx" back into the Onboarding folder from Drive trash.\n\nThe index page link that was repointed at the 2026 handbook will be pointed back at this file.` }) },
+      { id:"d3", group:"Deletions", kind:"remove", key:"Doc", tier:3, deps:[], label:"IT setup — old VPN.docx", detail:"Superseded by handbook § 4 · last opened 20 months ago",
+        sent: () => `"IT setup — old VPN.docx" permanently deleted from the Onboarding folder in Drive`,
+        remedy: "Restore \"IT setup — old VPN.docx\" from Drive trash",
+        correction: () => ({ title:"Restore \"IT setup — old VPN.docx\"", meta:"Google Drive · trash retains deleted files for 30 days · Tier 2",
+          body:`Moves "IT setup — old VPN.docx" back into the Onboarding folder from Drive trash.\n\nThe index page link that was repointed at the 2026 handbook will be pointed back at this file.` }) },
+      { id:"d4", group:"Deletions", kind:"remove", key:"Doc", tier:3, deps:[], label:"First week FAQ.docx", detail:"Partially superseded by handbook § 1 · last opened 2 months ago",
+        sent: () => `"First week FAQ.docx" permanently deleted from the Onboarding folder in Drive`,
+        remedy: "Restore \"First week FAQ.docx\" from Drive trash",
+        correction: () => ({ title:"Restore \"First week FAQ.docx\"", meta:"Google Drive · trash retains deleted files for 30 days · Tier 2",
+          body:`Moves "First week FAQ.docx" back into the Onboarding folder from Drive trash.\n\nThe index page link that was repointed at the 2026 handbook will be pointed back at this file.` }) },
+
+      { id:"links", group:"Link repointing", kind:"update", key:"Index", tier:2, deps:["d1","d2","d3","d4"],
+        from:"6 links to retired docs", to:"6 links to the 2026 handbook", detail:"Onboarding index page",
+        regen: (S) => {
+          const kept = ["d1","d2","d3","d4"].filter(id => S.byId[id].rejected).length;
+          return { to: (6 - kept*1) + " links repointed, " + kept + " left as-is", detail:"Links to kept docs are no longer rewritten" };
+        } },
+
+      { id:"redirect", group:"Link repointing", kind:"add", key:"Note", tier:2, deps:["links"],
+        label:"Redirect note at the top of the index page", detail:"Lists what moved into the 2026 handbook",
+        regen: () => ({ detail:"Rewritten to list only the docs that were actually retired" }) }
+    ],
+  },
+
+  /* ---------- 4. scheduled, unattended, held for approval ---------- */
+  digest: {
+    id: "digest",
+    title: "Weekly exec digest",
+    blurb: "Scheduled · held 14h",
+    prompt: "Pull this week's revenue, hiring, incident, and roadmap updates into the exec digest and send it to exec-staff@.",
+    goal: "Assemble the four digest sections, write the summary, and stage the send to exec-staff@.",
+    criteria: [
+      "Every section cites a source from the last 7 days",
+      "Summary paragraph reflects all four sections",
+      "Subject line names the single biggest change of the week",
+      "Nothing sent externally without approval"
+    ],
+    tip: "Ran unattended at 06:00. The Tier 3 send waited for you.",
+    scheduled: "Ran 06:00 Fri · held 14h awaiting approval",
+    ledger: [
+      { tier:1, call:"sheets.getRange",   arg:"revenue dashboard · wk 31",   note:"proxied" },
+      { tier:1, call:"greenhouse.list",   arg:"offers accepted · wk 31",     note:"proxied" },
+      { tier:1, call:"incident.search",   arg:"sev1-sev2 · wk 31",           note:"2 incidents" },
+      { tier:1, call:"jira.searchIssues", arg:"roadmap epics · wk 31",       note:"proxied" },
+      { tier:2, call:"docs.appendSection",arg:"×4 digest sections",          note:"staged" },
+      { tier:2, call:"docs.updateContent",arg:"summary paragraph",           note:"staged" },
+      { tier:2, call:"gmail.createDraft", arg:"'Exec digest — week 31'",     note:"staged" },
+      { tier:3, call:"gmail.send",        arg:"to exec-staff@ (12)",         note:"held 14h · needs approval", warn:true }
+    ],
+    workstreams: [
+      { name:"Workstream 1", why:"Led with hiring; buried the sev1 incident in paragraph four", score:"0.64" },
+      { name:"Workstream 2", why:"All 4 checks pass; leads with the incident, every section sourced", score:"0.90", win:true },
+      { name:"Workstream 3", why:"Wrote a summary that contradicts the revenue section", score:"0.41" }
+    ],
+    actions: [
+      { id:"s1", group:"Digest sections", kind:"add", key:"§ 1", tier:2, deps:[], label:"Incidents — 1 sev1, 1 sev2", detail:"Checkout latency, 41 min · source: incident log" },
+      { id:"s2", group:"Digest sections", kind:"add", key:"§ 2", tier:2, deps:[], label:"Revenue — net new ARR $1.24M, +8% WoW", detail:"Source: revenue dashboard wk 31" },
+      { id:"s3", group:"Digest sections", kind:"add", key:"§ 3", tier:2, deps:[], label:"Hiring — 6 offers out, 4 accepted", detail:"Source: Greenhouse" },
+      { id:"s4", group:"Digest sections", kind:"add", key:"§ 4", tier:2, deps:[], label:"Roadmap — 3 epics shipped, 1 slipped to wk 33", detail:"Source: Jira roadmap epics" },
+
+      { id:"summary", group:"Summary", kind:"update", key:"Intro", tier:2, deps:["s1","s2","s3","s4"],
+        from:"last week's summary", to:"4-section summary, incident-led", detail:"Opens on the sev1, closes on the roadmap slip",
+        regen: (S) => {
+          const live = ["s1","s2","s3","s4"].filter(id => !S.byId[id].rejected).length;
+          return { to: live + "-section summary, incident-led", detail:"Rewritten without the rejected section" };
+        } },
+
+      { id:"subject", group:"Summary", kind:"update", key:"Subject", tier:2, deps:["summary"],
+        from:"Exec digest — week 31", to:"Exec digest — wk 31: checkout sev1, ARR +8%", detail:"Names the biggest change of the week",
+        regen: () => ({ to:"Exec digest — wk 31: checkout sev1", detail:"Rewritten from the surviving sections" }) },
+
+      { id:"send", group:"Send", kind:"add", key:"Email", tier:3, deps:["subject","summary"],
+        label:"Send digest to exec-staff@", detail:"12 recipients · held 14h",
+        sent: () => `Exec digest "wk 31: checkout sev1, ARR +8%" sent to exec-staff@ (12 recipients)`,
+        remedy: "Draft a correction email to those 12 recipients",
+        correction: () => ({
+          title: "Correction — exec digest, week 31",
+          meta: "To: exec-staff@ (12 recipients) · Tier 3, needs approval",
+          body: `All,
+
+A correction to this morning's digest: one section was pulled after it went out. Please disregard that section; the rest of the digest is accurate.
+
+An updated digest follows separately.`
+        }),
+        regen: () => ({ detail:"12 recipients · redrafted, still held" }) }
+    ],
+  }
+};
+
+const ORDER = ["jira","invoices","docs","digest"];
+let CURRENT = "jira";
+let S = null;
+
+/* ============================================================
+   helpers
+   ============================================================ */
+
+function el(html) { const t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstElementChild; }
+function push(n) { $thread.appendChild(n); scrollDown(); return n; }
+function scrollDown() { requestAnimationFrame(() => { $scroll.scrollTop = $scroll.scrollHeight; }); }
+function esc(s) { return String(s ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c])); }
+function tierBadge(t) { return `<span class="tier t${t}">${t===1?"T1 read":t===2?"T2 staged":"T3 approval"}</span>`; }
+const STAR = `<svg class="star" width="15" height="15" viewBox="0 0 24 24" aria-hidden="true"><g fill="var(--accent)"><rect x="11" y="2" width="2" height="20" rx="1"/><rect x="11" y="2" width="2" height="20" rx="1" transform="rotate(30 12 12)"/><rect x="11" y="2" width="2" height="20" rx="1" transform="rotate(60 12 12)"/><rect x="11" y="2" width="2" height="20" rx="1" transform="rotate(90 12 12)"/><rect x="11" y="2" width="2" height="20" rx="1" transform="rotate(120 12 12)"/><rect x="11" y="2" width="2" height="20" rx="1" transform="rotate(150 12 12)"/></g></svg>`;
+const CHECK = `<svg class="mk" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--ok)" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>`;
+
+function msgActions() {
+  return el(`<div class="msg-actions">
+    <button aria-label="Copy"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></button>
+    <button aria-label="Read aloud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 6a9 9 0 0 1 0 12"/></svg></button>
+    <button aria-label="Good response"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M7 22V11l4-9a2.5 2.5 0 0 1 2.5 3l-1 5H19a2 2 0 0 1 2 2.4l-1.5 7A2 2 0 0 1 17.5 22z"/><path d="M7 11H3v11h4"/></svg></button>
+    <button aria-label="Bad response"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M17 2v11l-4 9a2.5 2.5 0 0 1-2.5-3l1-5H5a2 2 0 0 1-2-2.4l1.5-7A2 2 0 0 1 6.5 2z"/><path d="M17 13h4V2h-4"/></svg></button>
+  </div>`);
+}
+
+function assistantTurn() {
+  const t = el(`<div class="turn assistant"><div class="assistant-body"></div></div>`);
+  push(t);
+  return t.querySelector(".assistant-body");
+}
+function userTurn(inner) {
+  push(el(`<div class="turn user"><div class="bubble">${inner}</div></div>`));
+  push(el(`<div class="turn stamp"><span>just now</span><svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 0 1 2-2h10"/></svg></div>`));
+}
+
+function status(body, text) {
+  const node = el(`<div class="status" aria-live="polite">${STAR}<span class="shimmer">${esc(text)}</span></div>`);
+  body.appendChild(node); scrollDown();
+  return {
+    set(t) { const s = node.querySelector("span:last-child"); s.textContent = t; },
+    finish(t) { node.innerHTML = `${CHECK}<span>${esc(t)}</span>`; },
+    remove() { node.remove(); }
+  };
+}
+
+/* ============================================================
+   scenario lifecycle
+   ============================================================ */
+
+function addOutput(name) {
+  S.outputs = S.outputs || [];
+  if (!S.outputs.includes(name)) S.outputs.push(name);
+  paintPanel();
+}
+
+function paintPanel() {
+  const n = (S && S.outputs) ? S.outputs.length : 0;
+  document.getElementById("outCount").textContent = n ? n : "";
+  const list = document.getElementById("outList");
+  list.innerHTML = n
+    ? S.outputs.map(f => `<div class="panel-file"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>${esc(f)}</div>`).join("")
+    : `<div class="panel-empty">Files Claude delivers land here.</div>`;
+  const p = document.getElementById("progList");
+  if (S && S.stage !== "idle") {
+    p.innerHTML = `<div class="panel-empty">Revision ${S.revision || 1} · ${appliable().length} actions staged</div>`;
+  } else {
+    p.innerHTML = `<div class="panel-empty">Steps appear as Claude works.</div>`;
+  }
+}
+
+function togglePanelSection(id) {
+  document.getElementById(id).classList.toggle("open");
+}
+
+function renderTaskList() {
+  document.getElementById("taskList").innerHTML = ORDER.map(id => {
+    const s = SCENARIOS[id];
+    return `<button class="task" ${id===CURRENT?'aria-current="true"':""} onclick="loadScenario('${id}')">
+      <svg class="tglyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6l2 2 3-3"/><path d="M3 14l2 2 3-3"/><path d="M12 7h9M12 15h9"/></svg>
+      <span class="tlabel">${esc(s.title)}<small>${esc(s.blurb)}</small></span></button>`;
+  }).join("");
+}
+
+function loadScenario(id) {
+  CURRENT = id;
+  const sc = SCENARIOS[id];
+
+  S = {
+    sc,
+    stage: "idle",
+    live: false,
+    revision: 0,
+    criteria: [...sc.criteria],
+    actions: sc.actions.map(a => ({ ...a, rejected:false, reason:"", dropped:false, regenerated:false })),
+    byId: {},
+    expanded: {},
+    stagedCard: null
+  };
+  S.actions.forEach(a => { S.byId[a.id] = a; });
+
+  $thread.innerHTML = "";
+  $input.disabled = false;
+  $input.value = sc.prompt;
+  $send.disabled = false;
+  document.getElementById("topTitle").textContent = sc.title;
+  document.getElementById("hint").textContent = sc.tip;
+  document.getElementById("tglParallel").checked = id === "digest";
+  document.getElementById("modeBtn").disabled = false;
+  syncChip();
+  document.getElementById("hint").textContent = sandboxOn()
+    ? sc.tip
+    : "This mode doesn't stage — Claude writes to your workspace as it works.";
+  renderTaskList();
+  paintPanel();
+  scrollDown();
+}
+
+/* ============================================================
+   flow
+   ============================================================ */
+
+function startTask() {
+  if (S.stage !== "idle") return;
+  if (!sandboxOn()) {
+    const t3 = MODE === "skip"
+      ? "Sends and deletes will go through unprompted too."
+      : "Claude will still stop before anything irreversible.";
+    openPrompt({
+      title: `Run in ${MODES[MODE].label} mode?`,
+      tool: "jira.updateIssue · gmail.send · drive.deleteFile",
+      text: "Claude writes to your workspace as it works. Nothing is staged, so nothing can be rejected or regenerated before it lands.",
+      note: t3,
+      ok: `Run in ${MODES[MODE].label}`,
+      onOk: () => beginTask(true)
+    });
+    return;
+  }
+  beginTask(false);
+}
+
+function beginTask(live) {
+  if (S.stage !== "idle") return;
+  S.live = live;
+  S.mode = MODE;
+  S.prompts = 0;
+  S.stage = "running";
+  document.getElementById("modeBtn").disabled = true;
+  $send.disabled = true;
+  $input.value = "";
+  $input.disabled = true;
+  document.getElementById("hint").textContent = "Simulated run — no connector is actually called.";
+  userTurn(esc(S.sc.prompt));
+  runPlan();
+}
+
+async function runPlan() {
+  const body = assistantTurn();
+  const st = status(body, "Analyzing your request…");
+  await wait(900);
+  st.remove();
+  if (S.sc.scheduled) {
+    body.appendChild(el(`<div class="note"><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>Scheduled task · ${esc(S.sc.scheduled)}. Claude ran the whole thing in the sandbox while you were away and stopped at the send.</span></div>`));
+  }
+  body.appendChild(el(`<div class="prose">Here's the plan, and what I'll treat as done. Edit any line before I run it.</div>`));
+  body.appendChild(msgActions());
+  renderContract(body);
+}
+
+function renderContract(body, editing = false) {
+  const old = body.querySelector('[data-card="contract"]');
+  if (old) old.remove();
+  const items = S.criteria.map((c,i) => editing
+    ? `<li><span class="box"></span><input type="text" value="${esc(c)}" data-crit="${i}" /></li>`
+    : `<li><span class="box"></span><span>${esc(c)}</span></li>`).join("");
+
+  const card = el(`<div class="card" data-card="contract">
+    <div class="card-head">
+      <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <span class="card-title">Done contract</span><span class="card-sub">· ${S.criteria.length} checks</span>
+    </div>
+    <div class="card-body"><p class="goal">${esc(S.sc.goal)}</p><ul class="crit">${items}</ul></div>
+    <div class="card-foot">
+      ${editing ? `<button class="btn primary" data-act="save">Save criteria</button>`
+                : `<button class="btn primary" data-act="accept">Accept and run</button><button class="btn" data-act="modify">Modify</button>`}
+      <span class="foot-note">Claude scores the sandbox result against these</span>
+    </div>
+  </div>`);
+
+  card.addEventListener("click", e => {
+    const act = e.target.closest("[data-act]")?.dataset.act;
+    if (act === "modify") renderContract(body, true);
+    if (act === "save") { card.querySelectorAll("[data-crit]").forEach(i => { S.criteria[+i.dataset.crit] = i.value; }); renderContract(body, false); }
+    if (act === "accept") {
+      card.querySelector(".card-foot").innerHTML = `<span class="tier ok">Accepted</span><span class="foot-note">${S.criteria.length} checks locked</span>`;
+      if (S.live) runLive(); else runSandbox();
+    }
+  });
+  body.appendChild(card); scrollDown();
+}
+
+async function runLive() {
+  const body = assistantTurn();
+  const st = status(body, "Running live against your workspace…");
+  await wait(650);
+
+  const card = el(`<div class="card">
+    <div class="card-head">
+      <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h0"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+      <span class="card-title">Live action ledger</span><span class="card-sub">· writing to your workspace as it runs</span>
+    </div><div class="ledger"></div></div>`);
+  body.appendChild(card);
+  S.ledgerCard = card;
+  const ledger = card.querySelector(".ledger");
+
+  let aborted = false;
+  for (const e of S.sc.ledger) {
+    await wait(340);
+
+    /* Manual approves the intent, before there is anything to look at */
+    if (e.tier === 2 && S.mode === "manual") {
+      S.prompts++;
+      const ok = await askPermission({
+        title: "Claude wants to run an action",
+        tool: `${e.call} · ${e.arg}`,
+        text: "Manual mode asks before each action. Claude hasn't run it yet, so you're approving the description rather than the result.",
+        note: "",
+        ok: "Allow"
+      });
+      if (!ok) {
+        ledger.appendChild(el(`<div class="row warn">${tierBadge(e.tier)}<span class="call">${esc(e.call)}</span><span class="arg">${esc(e.arg)}</span><span class="spread"></span><span class="tier no">denied</span></div>`));
+        aborted = true;
+        break;
+      }
+    }
+
+    const applied = e.tier === 3 ? (S.mode === "skip" ? "applied" : "held for approval") : "applied";
+    const cls = (e.tier === 3 && S.mode !== "skip") ? "arg" : "tier ok";
+    ledger.appendChild(el(`<div class="row ${e.warn?"warn":""}">${tierBadge(e.tier)}<span class="call">${esc(e.call)}</span><span class="arg">${esc(e.arg)}</span><span class="spread"></span><span class="${cls}">${esc(applied)}</span></div>`));
+    scrollDown();
+  }
+
+  if (aborted) {
+    st.finish("Run stopped · earlier actions were already applied");
+    body.appendChild(el(`<div class="note warn"><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h0"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span>Denying partway leaves partial state. The calls above already ran against your workspace. In Staging, a rejection at this point costs nothing — none of it was applied yet.</span></div>`));
+    S.applied = [];
+    return;
+  }
+
+  st.finish(S.mode === "skip" ? "Run complete · everything applied, no prompts" : "Run complete · Tier 1–2 changes are already live");
+
+
+  const fatigue = S.mode === "manual"
+    ? `${S.prompts} approvals for this one task, each describing an action you couldn't see the result of. The same work in Staging is one approval over the finished changes.`
+    : S.mode === "skip"
+      ? `No prompts were shown, including for the sends and deletes. Nothing was staged, so there is nothing to review after the fact.`
+      : `The Tier 1–2 changes above are already in your workspace. Nothing was staged, so there was nothing to review before it landed.`;
+  body.appendChild(el(`<div class="note warn"><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h0"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span>${fatigue}</span></div>`));
+
+  await wait(400);
+  if (S.mode === "skip") { S.applied = appliable().slice(); doApply(); }
+  else applyBatch();
+}
+
+async function runSandbox() {
+  const body = assistantTurn();
+  const parallel = document.getElementById("tglParallel").checked;
+  const st = status(body, parallel ? "Staging… workstream 1 of 3" : "Staging changes…");
+  await wait(650);
+
+  const card = el(`<div class="card">
+    <div class="card-head">
+      <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M3 20h18"/><path d="M5 20V9l7-5 7 5v11"/></svg>
+      <span class="card-title">Action ledger</span><span class="card-sub">· staged, nothing applied to your workspace</span>
+    </div><div class="ledger"></div></div>`);
+  body.appendChild(card);
+  S.ledgerCard = card;
+  const ledger = card.querySelector(".ledger");
+
+  for (const e of S.sc.ledger) {
+    await wait(380);
+    ledger.appendChild(el(`<div class="row ${e.warn?"warn":""}">${tierBadge(e.tier)}<span class="call">${esc(e.call)}</span><span class="arg">${esc(e.arg)}</span><span class="spread"></span><span class="arg">${esc(e.note)}</span></div>`));
+    scrollDown();
+  }
+
+  if (parallel) {
+    st.set("Scoring 3 workstreams against the done contract…");
+    await wait(900);
+    body.appendChild(el(`<div class="card">
+      <div class="card-head">
+        <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v12"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9v3a6 6 0 0 1-6 6H9"/></svg>
+        <span class="card-title">Sub-agent workstreams</span><span class="card-sub">· 3 run, 1 surfaced</span>
+      </div>
+      <div class="card-body"><div class="paths">${S.sc.workstreams.map(p=>`<div class="path ${p.win?"win":""}"><span class="name">${p.name}</span><span class="why">${esc(p.why)}</span><span class="score">${p.score}</span></div>`).join("")}</div></div>
+    </div>`));
+    scrollDown();
+  }
+
+  st.finish(parallel ? "Ran 3 workstreams · surfacing the highest scoring one" : "Staging complete · nothing applied yet");
+  await wait(450);
+  emitStaged(true);
+}
+
+/* ============================================================
+   staged changes
+   ============================================================ */
+
+/* rejected actions leave the staged set entirely — the new revision is
+   the plan as if they had never been proposed. Prior revisions keep their
+   own static snapshot, so the audit trail survives. */
+function liveActions() { return S.actions.filter(a => !a.dropped && !a.rejected); }
+function appliable() { return liveActions().filter(a => !a.blocked && !a.pending && !a.pendingResolve); }
+
+function collapseCard(card, label) {
+  if (!card || !card.isConnected) return;
+  const wrapper = el(`<details class="superseded">
+      <summary>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        ${label}
+        <svg class="caret" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="inner"></div>
+    </details>`);
+  card.replaceWith(wrapper);
+  wrapper.querySelector(".inner").appendChild(card);
+}
+
+function emitStaged(first) {
+  S.revision++;
+  if (S.ledgerCard) {
+    collapseCard(S.ledgerCard, `Action ledger · ${S.sc.ledger.length} tool calls`);
+    S.ledgerCard = null;
+  }
+  const body = assistantTurn();
+  if (first) {
+    const blocked = liveActions().filter(a => a.blocked).length;
+    const n = appliable().length;
+    body.appendChild(el(`<div class="prose">Here's everything staged — ${n} change${n===1?"":"s"} across ${groupsOf().length} areas, none applied yet. Review them together and apply in one pass.${blocked?" Two rows couldn't be reconciled — they're waiting on you.":""}</div>`));
+  } else {
+    body.appendChild(el(`<div class="prose">Here's revision ${S.revision} with your feedback applied.</div>`));
+  }
+  const card = el(`<div class="card" data-card="staged"></div>`);
+  body.appendChild(card);
+  S.stagedCard = card;
+  paintStaged();
+  paintPanel();
+  scrollDown();
+}
+
+function groupsOf() {
+  const g = [];
+  liveActions().forEach(a => { if (!g.includes(a.group)) g.push(a.group); });
+  return g;
+}
+
+function emailBodyFor() {
+  const t = liveTickets(S);
+  const a7 = S.byId["a7"];
+  const ownerLine = a7.rejected
+    ? `Search relevance — <mark>${esc(a7.from)}</mark> (unchanged)`
+    : `Search relevance — ${esc(a7.to)}`;
+  const lines = t.map(x => "• " + esc(x.label.split(" for ")[0]) + " — " + esc((x.detail.match(/Assignee ([^·]+)/)||[,"—"])[1].trim()));
+  const gapNote = t.length === 3
+    ? `Three roadmap gaps were opened as ${t.map(x=>x.key).join(", ")}.`
+    : t.length ? `${t.length} roadmap gaps were opened as ${t.map(x=>x.key).join(", ")}. <mark>One roadmap item is still untracked.</mark>`
+               : `<mark>No roadmap gaps were ticketed.</mark>`;
+  return `Team,
+
+H2 scope is locked in Jira and every workstream now has a named owner.
+
+${lines.join("\n")}
+• ${ownerLine}
+
+${gapNote} Backlog is reconciled as of today.`;
+}
+
+function itemHtml(a) {
+  const kindMark = a.kind === "add" ? "+" : a.kind === "remove" ? "−" : "±";
+  const kindLabel = a.kind === "add" ? "Add" : a.kind === "remove" ? "Remove" : "Update";
+
+  let change;
+  if (a.email) {
+    change = `<div class="email" style="margin:0">
+        <div class="subj">${esc(a.label)}</div>
+        <div class="meta">${esc(a.detail)} ${tierBadge(a.tier)} send held until you allow it</div>
+        <div class="body">${emailBodyFor()}</div>
+      </div>`;
+  } else if (a.from !== undefined) {
+    change = `<span class="change"><span class="old">${esc(a.from)}</span><span class="arrow">→</span><span class="new">${esc(a.to)}</span>${a.detail?`<span class="detail">${esc(a.detail)}</span>`:""}</span>`;
+  } else {
+    change = `<span class="change"><span class="new">${esc(a.label)}</span>${a.detail?`<span class="detail">${esc(a.detail)}</span>`:""}</span>`;
+  }
+
+  const cls = a.pending ? "pending" : a.pendingResolve ? "resolving" : a.blocked ? "blocked" : a.regenerated || a.justResolved ? "regen" : "";
+  const right = a.pendingResolve
+    ? `<span class="flag">input saved</span>`
+    : a.blocked
+      ? `<button class="btn sm" onclick="openResolve('${a.id}')">Resolve</button>`
+      : a.pending
+        ? `<span class="flag">marked to reject</span>`
+        : `<button class="rej" title="Reject this change" aria-label="Reject ${esc(a.key)}" onclick="openReject('${a.id}')"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M18 6 6 18M6 6l12 12"/></svg></button>`;
+
+  let reasonRow = "";
+  if (a.pending) {
+    reasonRow = `<div class="reason">${a.reason ? esc(a.reason) : "<em>no reason given</em>"}<button class="undo-rej" onclick="unmarkReject('${a.id}')">Keep this change</button></div>`;
+  } else if (a.pendingResolve) {
+    reasonRow = `<div class="reason regen-note">Your input: ${esc(a.input)}<button class="undo-rej" onclick="unmarkResolve('${a.id}')">Discard</button></div>`;
+  } else if (a.justResolved) {
+    reasonRow = `<div class="reason regen-note">resolved from your input in revision ${a.resolvedRev || S.revision}</div>`;
+  } else if (a.regenerated) {
+    reasonRow = `<div class="reason regen-note">regenerated in revision ${a.regenRev || S.revision}</div>`;
+  }
+
+  const nDeps = dependentsOf(a.id).length;
+  const depNote = `${nDeps} downstream action${nDeps===1?"":"s"} will regenerate`;
+
+  const resolveForm = a.blocked ? `
+      <div class="rejform" id="resform-${a.id}" style="display:none">
+        <label class="inputlabel" for="in-${a.id}">${esc(a.inputLabel || "Provide the missing input")}</label>
+        ${a.options
+          ? `<select id="in-${a.id}">${a.options.map(o=>`<option>${esc(o)}</option>`).join("")}</select>`
+          : `<input type="text" id="in-${a.id}" placeholder="${esc(a.placeholder || "")}" />`}
+        <div class="rowbtns">
+          <button class="btn primary sm" onclick="markResolve('${a.id}')">Save input</button>
+          <button class="btn sm" onclick="closeResolve('${a.id}')">Cancel</button>
+          <span class="hintline">${depNote}</span>
+        </div>
+      </div>` : "";
+
+  const rejectForm = (!a.blocked && !a.pendingResolve) ? `
+      <div class="rejform" id="form-${a.id}" style="display:none">
+        <textarea id="why-${a.id}" placeholder="Why are you rejecting this? Claude uses the reason when it regenerates."></textarea>
+        <div class="rowbtns">
+          <button class="btn primary sm" onclick="markReject('${a.id}', true)">Mark with reason</button>
+          <button class="btn sm" onclick="markReject('${a.id}', false)">Mark without one</button>
+          <button class="btn sm" onclick="closeReject('${a.id}')">Cancel</button>
+          <span class="hintline">${depNote}</span>
+        </div>
+      </div>` : "";
+
+  return `<div class="item ${cls}" id="item-${a.id}">
+      <div class="item-main">
+        <span class="kind ${a.kind}" title="${kindLabel}">${kindMark}</span>
+        <span class="key">${esc(a.key)}</span>
+        ${change}
+        ${a.tier === 3 && !a.email ? tierBadge(3) : ""}
+        ${right}
+      </div>
+      ${reasonRow}${resolveForm}${rejectForm}
+    </div>`;
+}
+
+function paintStaged() {
+  const card = S.stagedCard;
+  if (!card) return;
+  const live = liveActions();
+  const ok = appliable();
+  const pr = live.filter(a => a.pending);
+  const ps = live.filter(a => a.pendingResolve);
+  const blocked = live.filter(a => a.blocked).length;
+  const t3 = ok.filter(a => a.tier === 3).length;
+  const cascade = pendingCascade().length;
+  const marked = pr.length + ps.length;
+  const feedbackLabel = pr.length && ps.length
+    ? `Regenerate with ${marked} edits`
+    : pr.length ? `Reject ${pr.length} and regenerate`
+                : `Regenerate with ${ps.length} resolved`;
+
+  const groups = groupsOf().map(g => {
+    const rows = live.filter(a => a.group === g);
+    const isBig = rows.length > 6;
+    const open = S.expanded[g];
+    const shown = isBig && !open ? rows.slice(0, 5) : rows;
+    const nOk = rows.filter(a => !a.rejected && !a.blocked).length;
+    const defaultOpen = g !== "Assignee updates";
+    return `<details class="group" ${defaultOpen?"open":""}>
+      <summary class="group-head">
+        <span>${esc(g)}</span>
+        <span class="count">${nOk} of ${rows.length} staged</span>
+        <svg class="caret" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="group-items">
+        ${shown.map(itemHtml).join("")}
+        ${isBig ? `<button class="btn sm" style="align-self:flex-start" onclick="toggleGroup('${esc(g)}')">${open?"Show fewer":"Show all "+rows.length}</button>` : ""}
+      </div>
+    </details>`;
+  }).join("");
+
+  card.innerHTML = `
+    <div class="card-head">
+      <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v16"/><path d="M4 8h6M4 16h6"/><path d="M14 12h6"/><path d="M17 9l3 3-3 3"/></svg>
+      <span class="card-title">Staged changes</span>
+      <span class="card-sub">· ${ok.length} change${ok.length===1?"":"s"} · 1 approval${S.revision>1?` · revision ${S.revision}`:""}${pr.length?` · ${pr.length} marked to reject`:""}${ps.length?` · ${ps.length} resolved`:""}${blocked?` · ${blocked} blocked`:""}</span>
+    </div>
+    <div class="card-body">${groups}</div>
+    <div class="card-foot">
+      ${marked
+        ? `<button class="btn primary" onclick="runFeedback()">${feedbackLabel}</button>
+           <button class="btn" onclick="clearPending()">Clear marks</button>
+           <span class="foot-note">${cascade} downstream action${cascade===1?"":"s"} will be replayed</span>`
+        : `<button class="btn primary" onclick="applyBatch()" ${ok.length?"":"disabled"}>Apply ${ok.length} change${ok.length===1?"":"s"}</button>
+           <span class="foot-note">${blocked
+              ? `${blocked} blocked item${blocked===1?"":"s"} won't be applied until resolved`
+              : `One approval covers all ${ok.length}${t3 ? ` · ${t3} irreversible` : ""}`}</span>`}
+    </div>`;
+}
+
+function toggleGroup(g) { S.expanded[g] = !S.expanded[g]; paintStaged(); }
+
+function openReject(id) {
+  document.querySelectorAll(".rejform").forEach(f => f.style.display = "none");
+  const f = document.getElementById("form-" + id);
+  if (f) { f.style.display = "flex"; const t = document.getElementById("why-" + id); if (t) t.focus(); }
+}
+function closeReject(id) { const f = document.getElementById("form-" + id); if (f) f.style.display = "none"; }
+
+/* ============================================================
+   dependency graph + regeneration
+   ============================================================ */
+
+function dependentsOf(id) {
+  const out = [];
+  const walk = target => {
+    liveActions().forEach(a => {
+      if (a.rejected || out.includes(a.id) || a.id === id) return;
+      if ((a.deps || []).includes(target)) { out.push(a.id); walk(a.id); }
+    });
+  };
+  walk(id);
+  return out;
+}
+
+/* union of everything downstream of the currently marked items */
+function pendingMarks() { return liveActions().filter(a => a.pending || a.pendingResolve); }
+
+function pendingCascade() {
+  const marked = pendingMarks().map(a => a.id);
+  const out = [];
+  marked.forEach(id => dependentsOf(id).forEach(d => {
+    if (!out.includes(d) && !marked.includes(d)) out.push(d);
+  }));
+  return out;
+}
+
+/* mark, don't regenerate — the user can audit the whole batch first */
+function markReject(id, withReason) {
+  const a = S.byId[id];
+  if (!a || a.rejected || a.pending) return;
+  const ta = document.getElementById("why-" + id);
+  a.reason = withReason && ta ? ta.value.trim() : "";
+  a.pending = true;
+  closeReject(id);
+  paintStaged();
+}
+function unmarkReject(id) {
+  const a = S.byId[id];
+  if (!a) return;
+  a.pending = false; a.reason = "";
+  paintStaged();
+}
+
+/* blocked items take input through the same shape of control */
+function openResolve(id) {
+  document.querySelectorAll(".rejform").forEach(f => f.style.display = "none");
+  const f = document.getElementById("resform-" + id);
+  if (f) { f.style.display = "flex"; const i = document.getElementById("in-" + id); if (i) i.focus(); }
+}
+function closeResolve(id) { const f = document.getElementById("resform-" + id); if (f) f.style.display = "none"; }
+
+function markResolve(id) {
+  const a = S.byId[id];
+  if (!a || !a.blocked) return;
+  const field = document.getElementById("in-" + id);
+  const v = field ? field.value.trim() : "";
+  if (!v) { if (field) field.focus(); return; }
+  a.input = v;
+  a.pendingResolve = true;
+  closeResolve(id);
+  paintStaged();
+}
+function unmarkResolve(id) {
+  const a = S.byId[id];
+  if (!a) return;
+  a.pendingResolve = false; a.input = "";
+  paintStaged();
+}
+
+function clearPending() {
+  liveActions().forEach(a => { a.pending = false; a.reason = ""; a.pendingResolve = false; a.input = ""; });
+  paintStaged();
+}
+
+async function runFeedback() {
+  const rejects  = liveActions().filter(a => a.pending);
+  const resolves = liveActions().filter(a => a.pendingResolve);
+  if (!rejects.length && !resolves.length) return;
+  const deps = pendingCascade();
+
+  rejects.forEach(a => { a.pending = false; a.rejected = true; });
+  resolves.forEach(a => {
+    a.pendingResolve = false;
+    a.blocked = false;
+    a.resolved = true;
+    a.justResolved = true;
+    a.resolvedRev = S.revision + 1;
+    if (a.resolve) Object.assign(a, a.resolve(a.input));
+    a.group = S.sc.resolvedGroup || a.group;
+  });
+
+  /* 1 — collapse the revision the user was auditing */
+  collapseStaged();
+
+  /* 2 — the whole batch reads as one message from the person */
+  const rejRows = rejects.map(a => {
+    const label = a.email ? a.label : (a.label || `${a.from} → ${a.to}`);
+    return `<div class="rej-item"><span class="what">${esc(a.key)} · ${esc(label)}</span>
+      <span class="why ${a.reason?"":"none"}">${a.reason ? esc(a.reason) : "No reason given"}</span></div>`;
+  }).join("");
+  const resRows = resolves.map(a => `<div class="rej-item">
+      <span class="what">${esc(a.key)} · ${esc(a.inputLabel || "input provided")}</span>
+      <span class="why">${esc(a.input)}</span></div>`).join("");
+
+  const head = [];
+  if (rejects.length) head.push(`Rejected ${rejects.length} change${rejects.length===1?"":"s"}`);
+  if (resolves.length) head.push(`Resolved ${resolves.length} blocked item${resolves.length===1?"":"s"}`);
+  userTurn(`
+    <div class="rej-head">
+      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12h16M4 6h10M4 18h7"/></svg>
+      ${head.join(" · ")} in revision ${S.revision}
+    </div>${rejRows}${resRows}`);
+
+  /* 3 — Claude replays the union of everything downstream */
+  const marked = [...rejects, ...resolves];
+  const keys = marked.map(a => a.key);
+  const body = assistantTurn();
+  const st = status(body, `Rewinding to the earliest checkpoint before ${keys[0]}…`);
+  await wait(850);
+
+  const steps = el(`<div class="steps"></div>`);
+  body.appendChild(steps);
+
+  for (const a of resolves) {
+    const row = el(`<div class="step">${STAR}<span><span class="shimmer">Staging ${esc(a.key)} with your input…</span><span class="sub">was blocked · ${esc(a.input)}</span></span></div>`);
+    steps.appendChild(row); scrollDown();
+    await wait(700);
+    row.innerHTML = `${CHECK}<span>${esc(a.key)} unblocked<span class="sub">${esc(a.detail)}</span></span>`;
+    scrollDown();
+  }
+
+  if (deps.length) {
+    st.set(`Replaying ${deps.length} dependent action${deps.length===1?"":"s"} with your feedback as new context…`);
+    for (const did of deps) {
+      const d = S.byId[did];
+      const causes = (d.deps || []).filter(x => marked.some(m => m.id === x)).map(x => S.byId[x].key);
+      const why = causes.length ? `depends on ${causes.join(", ")}` : `depends on an action that was just replayed`;
+      const row = el(`<div class="step">${STAR}<span><span class="shimmer">Regenerating ${esc(d.group)} · ${esc(d.key)}…</span><span class="sub">${esc(why)}</span></span></div>`);
+      steps.appendChild(row); scrollDown();
+      await wait(760);
+
+      let summary = "updated";
+      if (d.regen) {
+        const patch = d.regen(S);
+        if (patch.dropped) { d.dropped = true; summary = patch.note || "dropped"; }
+        else { Object.assign(d, patch); summary = patch.detail || patch.to || "updated"; }
+      } else if (d.email) {
+        summary = "owners and ticket list rewritten from the surviving actions";
+      }
+      d.regenerated = true;
+      d.regenRev = S.revision + 1;
+      row.innerHTML = `${CHECK}<span>${esc(d.group)} · ${esc(d.key)}<span class="sub">${esc(summary)}</span></span>`;
+      scrollDown();
+    }
+  }
+
+  const preserved = appliable().length - deps.filter(x => !S.byId[x].dropped).length - resolves.length;
+  st.finish(deps.length
+    ? `Recomputed ${deps.length} action${deps.length===1?"":"s"}${resolves.length?` · unblocked ${resolves.length}`:""}`
+    : `Applied your feedback · nothing downstream needed replaying`);
+
+  const notes = [];
+  if (rejects.length) notes.push(`${rejects.length} rejected action${rejects.length===1?"":"s"} ${rejects.length===1?"is":"are"} gone from the plan — the next revision is what I would have proposed if I had never suggested ${rejects.length===1?"it":"them"}.`);
+  notes.push(`${Math.max(preserved,0)} independent actions were preserved untouched — no re-run, no re-approval.`);
+  body.appendChild(el(`<div class="note"><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3v12"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="6" r="3"/><path d="M18 9v3a6 6 0 0 1-6 6H9"/></svg><span>${notes.join(" ")}</span></div>`));
+
+  await wait(400);
+  liveActions().forEach(a => { if (!resolves.includes(a)) a.justResolved = false; });
+  emitStaged(false);
+}
+
+function collapseStaged() {
+  const card = S.stagedCard;
+  if (!card) return;
+  const ok = appliable().length;
+  const wrapper = el(`<details class="superseded">
+      <summary>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg>
+        Revision ${S.revision} · superseded · ${ok} actions
+        <svg class="caret" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M9 6l6 6-6 6"/></svg>
+      </summary>
+      <div class="inner"></div>
+    </details>`);
+  card.replaceWith(wrapper);
+  card.dataset.card = "staged-old";
+  card.querySelectorAll(".rejform, .rej, .group-items .btn").forEach(n => n.remove());
+  card.querySelector(".card-foot")?.remove();
+  wrapper.querySelector(".inner").appendChild(card);
+  S.stagedCard = null;
+}
+
+/* ============================================================
+   apply
+   ============================================================ */
+
+function applyBatch() {
+  const ok = appliable();
+  const t3 = ok.filter(a => a.tier === 3);
+  if (!t3.length) return doApply();
+  const first = t3[0];
+  const tool = S.sc.id === "docs" ? "drive.deleteFile · 4 files"
+             : S.sc.id === "invoices" ? "netsuite.postJournalEntry · JE-Q3-payroll"
+             : S.sc.id === "digest" ? "gmail.send · exec-staff@ (12 recipients)"
+             : "gmail.send · eng-leads@ (7 recipients)";
+  const title = S.sc.id === "docs" ? "Claude wants to delete 4 files"
+              : S.sc.id === "invoices" ? "Claude wants to post a journal entry"
+              : "Claude wants to send an email";
+  openPrompt({
+    title, tool,
+    text: `This one approval applies everything staged — ${ok.length} change${ok.length===1?"":"s"} in a single pass. ${t3.length} of them ${t3.length===1?"is":"are"} irreversible, which is the only reason Claude is stopping to name ${t3.length===1?"it":"them"}.`,
+    note: S.sc.id === "docs"
+      ? "Deleted files leave your Drive for good."
+      : "Applying is final. Tier 3 actions also leave your workspace entirely.",
+    ok: "Allow", onOk: doApply
+  });
+}
+
+async function doApply() {
+  const ok = appliable();
+  S.applied = ok.slice();
+  const body = assistantTurn();
+  const st = status(body, "Applying to your workspace…");
+  await wait(1300);
+  st.finish(`Applied ${ok.length} change${ok.length===1?"":"s"}`);
+
+  const byGroup = {};
+  ok.forEach(a => { byGroup[a.group] = (byGroup[a.group] || 0) + 1; });
+  const rows = Object.entries(byGroup).map(([g,n]) => {
+    const tier = Math.max(...ok.filter(a => a.group === g).map(a => a.tier));
+    return `<div class="row">${tierBadge(tier)}<span class="call">${esc(g)}</span><span class="arg">×${n}</span><span class="spread"></span><span class="tier ok">${tier===3?"sent":"done"}</span></div>`;
+  }).join("");
+
+  body.appendChild(el(`<div class="card">
+    <div class="card-head">
+      <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>
+      <span class="card-title">Applied to your workspace</span>
+      <span class="card-sub">· ${S.revision ? S.revision + " revision" + (S.revision===1?"":"s") + " · " : ""}${S.mode === "skip" ? "no prompts" : "1 permission prompt"}</span>
+    </div><div class="ledger">${rows}</div></div>`));
+
+  body.appendChild(el(`<div class="file">
+    <span class="ficon"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg></span>
+    <span style="flex:1"><span class="fname">${esc(S.sc.id)}-run-summary.md</span><span class="fmeta">Delivered to this task · includes every rejection and reason</span></span>
+    <button class="inline-btn">Preview</button><button class="inline-btn">Download</button>
+  </div>`));
+
+  if (S.stagedCard) S.stagedCard.querySelector(".card-foot").innerHTML = `<span class="tier ok">Applied</span><span class="foot-note">staged changes cleared</span>`;
+
+  body.appendChild(el(`<div class="note"><svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span>These changes are live. Staging is the review step — once applied, changes stand as they are.</span></div>`));
+  addOutput(`${S.sc.id}-run-summary.md`);
+  const nr = notReversibleCard();
+  if (nr) body.appendChild(nr);
+
+  scrollDown();
+}
+
+function notReversibleCard() {
+  const t3 = (S.applied || []).filter(a => a.tier === 3);
+  if (!t3.length) return null;
+  const rows = t3.map(a => {
+    const sent = typeof a.sent === "function" ? a.sent(S) : (a.sent || `${a.key} · ${a.label}`);
+    return `<div class="irrev">
+      <div class="irrev-what">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="var(--t3)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M13 6l6 6-6 6"/></svg>
+        <span>${esc(sent)}</span>
+      </div>
+      ${a.remedy ? `<button class="btn sm" onclick="draftCorrection('${a.id}')">${esc(a.remedy)}</button>` : ""}
+    </div>`;
+  }).join("");
+
+  return el(`<div class="card">
+    <div class="card-head">
+      <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 17h0"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>
+      <span class="card-title">Left your workspace</span>
+      <span class="card-sub">· ${t3.length} action${t3.length===1?"":"s"} other people can already see</span>
+    </div>
+    <div class="card-body" style="display:flex;flex-direction:column;gap:8px">${rows}</div>
+  </div>`);
+}
+
+function sendCorrection(btn) {
+  const foot = btn.closest(".card-foot");
+  foot.innerHTML = `<span class="tier ok">Approved and sent</span><span class="foot-note">correction delivered</span>`;
+}
+
+async function draftCorrection(id) {
+  const a = S.byId[id];
+  if (!a || !a.correction) return;
+  const c = typeof a.correction === "function" ? a.correction(S) : a.correction;
+  const body = assistantTurn();
+  const st = status(body, `Drafting: ${a.remedy}…`);
+  await wait(1000);
+  st.finish(`Drafted a correction for ${a.key} · ${a.label}`);
+  body.appendChild(el(`<div class="card">
+    <div class="card-head">
+      <svg class="glyph" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>
+      <span class="card-title">Correction staged</span>
+      <span class="card-sub">· corrects ${esc(a.key)} · ${esc(a.label)}</span>
+    </div>
+    <div class="card-body">
+      <div class="email" style="margin:0">
+        <div class="subj">${esc(c.title)}</div>
+        <div class="meta">${esc(c.meta)}</div>
+        <div class="body">${esc(c.body)}</div>
+      </div>
+    </div>
+    <div class="card-foot">
+      <button class="btn primary" onclick="sendCorrection(this)">Allow and send</button>
+      <button class="btn" onclick="this.closest('.card').remove()">Discard</button>
+      <span class="foot-note">Staged — not sent yet</span>
+    </div>
+  </div>`));
+  scrollDown();
+}
+
+/* ============================================================
+   chrome
+   ============================================================ */
+
+const $dlg = document.getElementById("dlg");
+
+function askPermission(opts) {
+  return new Promise(resolve => {
+    openPrompt({ ...opts, onOk: () => resolve(true) });
+    document.getElementById("dlgNo").onclick = () => { $dlg.close(); resolve(false); };
+  });
+}
+
+
+
+function openPrompt({ title, tool, text, note, ok, onOk }) {
+  document.getElementById("dlgTitle").textContent = title;
+  document.getElementById("dlgTool").textContent = tool;
+  document.getElementById("dlgText").textContent = text;
+  const n = document.getElementById("dlgNote");
+  n.textContent = note || ""; n.style.display = note ? "block" : "none";
+  const b = document.getElementById("dlgOk");
+  b.textContent = ok; b.onclick = () => { $dlg.close(); onOk(); };
+  document.getElementById("dlgNo").onclick = () => $dlg.close();
+  $dlg.showModal();
+}
+
+function togglePop(e) { e.stopPropagation(); document.getElementById("pop").classList.toggle("open"); }
+document.addEventListener("click", e => {
+  const pop = document.getElementById("pop");
+  if (pop.classList.contains("open") && !pop.contains(e.target) && !e.target.closest("#popBtn")) pop.classList.remove("open");
+  const m = document.getElementById("modeMenu");
+  if (m.classList.contains("open") && !m.contains(e.target) && !e.target.closest("#modeBtn")) {
+    m.classList.remove("open");
+    document.getElementById("modeBtn").setAttribute("aria-expanded", "false");
+  }
+});
+
+let MODE = "staging";
+const ICON = {
+  manual:  `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M18 11V6.5a1.5 1.5 0 0 0-3 0V11"/><path d="M15 10.5V4.5a1.5 1.5 0 0 0-3 0V11"/><path d="M12 10.5V5.5a1.5 1.5 0 0 0-3 0V13"/><path d="M9 12V8.5a1.5 1.5 0 0 0-3 0V14a7 7 0 0 0 7 7h1a5 5 0 0 0 5-5v-5"/></svg>`,
+  staging: `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M16.6 3.4a2.1 2.1 0 0 1 3 3L8 18l-4 1 1-4z"/><path d="M4 21.4h8"/></svg>`,
+  auto:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5l8 7-8 7z"/><path d="M13 5l8 7-8 7z"/></svg>`,
+  skip:    `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 9v4M12 16h0"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg>`
+};
+
+const MODES = {
+  manual:  { label:"Manual",  chip:"Manual · asks before each action" },
+  staging: { label:"Staging", chip:"Staging · nothing applied yet" },
+  auto:    { label:"Auto",    chip:"Auto · applying as it works" },
+  skip:    { label:"Skip",    chip:"Skip all · no prompts" }
+};
+
+function sandboxOn() { return MODE === "staging"; }
+
+function toggleModeMenu(e) {
+  e.stopPropagation();
+  const m = document.getElementById("modeMenu");
+  const open = m.classList.toggle("open");
+  document.getElementById("modeBtn").setAttribute("aria-expanded", open ? "true" : "false");
+}
+
+function setMode(m) {
+  MODE = m;
+  document.getElementById("modeMenu").classList.remove("open");
+  document.getElementById("modeBtn").setAttribute("aria-expanded", "false");
+  syncChip();
+  if (S && S.stage === "idle") {
+    document.getElementById("hint").textContent = sandboxOn()
+      ? S.sc.tip
+      : "This mode doesn't stage — Claude writes to your workspace as it works.";
+  }
+}
+
+function syncChip() {
+  const on = sandboxOn();
+  const par = document.getElementById("tglParallel").checked;
+  const chip = document.getElementById("modeChip");
+
+  document.getElementById("modeLabel").textContent = MODES[MODE].label;
+  document.getElementById("modeGlyph").innerHTML = ICON[MODE];
+  document.getElementById("modeBtn").classList.toggle("warn", MODE === "skip");
+  Object.keys(MODES).forEach(m => {
+    const t = document.getElementById("tick-" + m);
+    if (t) t.style.visibility = (m === MODE) ? "visible" : "hidden";
+    const r = document.getElementById("row-" + m);
+    if (r) r.classList.toggle("sel-row", m === MODE);
+  });
+  document.querySelector(".composer").classList.toggle("live", !on);
+
+  chip.textContent = on && par ? "Staging · 3 workstreams" : MODES[MODE].chip;
+  chip.classList.toggle("live", on);
+  chip.classList.toggle("off", !on);
+}
+
+document.getElementById("tglParallel").addEventListener("change", syncChip);
+
+$input.addEventListener("keydown", e => {
+  if (e.key === "Enter" && !e.shiftKey) { e.preventDefault(); startTask(); }
+});
+
+loadScenario("jira");
+</script>
+</body>
+</html>
